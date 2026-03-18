@@ -2,6 +2,7 @@ import ResourceCard from '../components/ResourceCard';
 import InfoBox from '../components/InfoBox';
 import VideoEmbed from '../components/VideoEmbed';
 import CollapsibleSection from '../components/CollapsibleSection';
+import QuizBlock from '../components/QuizBlock';
 
 export default function GettingStartedContent() {
   return (
@@ -193,6 +194,39 @@ export default function GettingStartedContent() {
             ))}
           </ul>
         </div>
+      </section>
+
+      <section id="getting-started-quiz">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Knowledge Check</h2>
+        <QuizBlock
+          sectionId="getting-started"
+          questions={[
+            {
+              question: 'What two FIRST core values guide team interactions?',
+              options: ['Innovation and Competition', 'Gracious Professionalism and Coopertition', 'Excellence and Speed', 'Science and Technology'],
+              correctIndex: 1,
+              explanation: 'FIRST operates on Gracious Professionalism (high-quality work with respect for others) and Coopertition (cooperating while competing).',
+            },
+            {
+              question: 'How many lead mentors (coaches) are required to register an FRC team?',
+              options: ['1', '2', '3', '5'],
+              correctIndex: 1,
+              explanation: 'FIRST requires a Lead Coach 1 and Lead Coach 2. Both must complete Youth Protection Screening.',
+            },
+            {
+              question: 'What is the recommended first step when starting a new FRC team?',
+              options: ['Buy a robot kit', 'Find a sponsoring organization', 'Register on the FIRST website', 'Recruit 50 students'],
+              correctIndex: 1,
+              explanation: 'You need a host institution (school, community org, etc.) before you can register or start building.',
+            },
+            {
+              question: 'As a mentor, your primary role is to:',
+              options: ['Build the robot for the students', 'Help students build the robot themselves', 'Only handle paperwork', 'Watch from the sidelines'],
+              correctIndex: 1,
+              explanation: "FIRST describes mentors as guides who support students through safe, structured learning. You help students build -- you don't build for them.",
+            },
+          ]}
+        />
       </section>
     </div>
   );

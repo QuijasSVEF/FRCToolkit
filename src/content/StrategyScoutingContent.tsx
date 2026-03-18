@@ -2,6 +2,8 @@ import ResourceCard from '../components/ResourceCard';
 import InfoBox from '../components/InfoBox';
 import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
+import QuizBlock from '../components/QuizBlock';
+import VideoEmbed from '../components/VideoEmbed';
 
 export default function StrategyScoutingContent() {
   return (
@@ -24,6 +26,14 @@ export default function StrategyScoutingContent() {
             <li>Determine endgame scoring requirements and how they affect total match strategy</li>
           </ol>
         </CollapsibleSection>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'FRC Match Strategy Fundamentals',
+            url: 'https://www.youtube.com/watch?v=0bnPqfPJmkQ',
+            embedUrl: 'https://www.youtube.com/embed/0bnPqfPJmkQ',
+            description: 'Karthik from Spectrum 3847 on FRC strategy and design principles'
+          }} />
+        </div>
       </section>
 
       <section id="scouting-system">
@@ -148,6 +158,33 @@ export default function StrategyScoutingContent() {
             { controller: 'Xbox Controller (USB-C)', strengths: 'Ergonomic, consistent mapping, wired via USB-C', notes: 'WPILib XboxController class native support' },
             { controller: 'DualShock 4', strengths: 'Comfortable, touchpad for extra inputs', notes: 'WPILib PS4Controller class support' },
             { controller: 'Logitech Extreme 3D Pro', strengths: '12 buttons, 8-way hat, twist rudder', notes: 'WPILib generic Joystick class support' },
+          ]}
+        />
+      </section>
+
+      <section id="strategy-quiz">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Knowledge Check</h2>
+        <QuizBlock
+          sectionId="strategy-scouting"
+          questions={[
+            {
+              question: 'In alliance selection, how many teams form each playoff alliance?',
+              options: ['2', '3', '4', '6'],
+              correctIndex: 1,
+              explanation: 'Each playoff alliance consists of 3 teams -- a captain and two picked partners.',
+            },
+            {
+              question: 'What is the primary purpose of scouting during qualification matches?',
+              options: ["Spying on other teams' secrets", 'Collecting performance data to inform alliance selection and match strategy', 'Just filling out forms', 'Counting wins and losses only'],
+              correctIndex: 1,
+              explanation: 'Scouting collects objective and subjective data about other teams to build a pick list for alliance selection and to plan match strategy.',
+            },
+            {
+              question: 'When building a pick list for alliance selection, you should prioritize:',
+              options: ['The team with the coolest robot', 'Reliability over peak performance', 'Only offensive scoring ability', 'Teams from your state'],
+              correctIndex: 1,
+              explanation: 'A robot that works consistently every match is more valuable than one that scores high sometimes but breaks down. Reliability wins playoffs.',
+            },
           ]}
         />
       </section>

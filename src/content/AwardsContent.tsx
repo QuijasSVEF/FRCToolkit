@@ -2,6 +2,7 @@ import ResourceCard from '../components/ResourceCard';
 import InfoBox from '../components/InfoBox';
 import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
+import VideoEmbed from '../components/VideoEmbed';
 
 export default function AwardsContent() {
   return (
@@ -71,6 +72,14 @@ export default function AwardsContent() {
           Impact Award preparation should begin in the off-season, not during build season.
           Track outreach activities, community impact numbers, and team history throughout the year.
         </InfoBox>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'FIRST Impact Award Tips & Examples',
+            url: 'https://www.youtube.com/watch?v=5fjwCwg-3Hs',
+            embedUrl: 'https://www.youtube.com/embed/5fjwCwg-3Hs',
+            description: 'Guide to preparing a strong FIRST Impact Award submission'
+          }} />
+        </div>
       </section>
 
       <section id="engineering-awards">

@@ -40,6 +40,7 @@ export interface Section {
   title: string;
   description: string;
   icon: string;
+  estimatedMinutes?: number;
   subsections: Subsection[];
 }
 
@@ -61,4 +62,11 @@ export interface VideoResource {
   embedUrl?: string;
   description?: string;
   duration?: string;
+}
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
 }

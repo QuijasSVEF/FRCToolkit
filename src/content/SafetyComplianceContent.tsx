@@ -1,6 +1,8 @@
 import ResourceCard from '../components/ResourceCard';
 import InfoBox from '../components/InfoBox';
 import CollapsibleSection from '../components/CollapsibleSection';
+import QuizBlock from '../components/QuizBlock';
+import VideoEmbed from '../components/VideoEmbed';
 
 export default function SafetyComplianceContent() {
   return (
@@ -51,6 +53,14 @@ export default function SafetyComplianceContent() {
             ))}
           </ul>
         </CollapsibleSection>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'FRC Team Safety Overview',
+            url: 'https://www.youtube.com/watch?v=4vC54aq7dDs',
+            embedUrl: 'https://www.youtube.com/embed/4vC54aq7dDs',
+            description: 'FIRST safety resources and best practices for FRC teams'
+          }} />
+        </div>
       </section>
 
       <section id="ppe-requirements">
@@ -157,6 +167,39 @@ export default function SafetyComplianceContent() {
           FIRST advises opening the main breaker AND unplugging the battery before performing any
           work on the robot. This includes stored energy in pneumatic systems and mechanisms under spring tension.
         </InfoBox>
+      </section>
+
+      <section id="safety-quiz">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Knowledge Check</h2>
+        <QuizBlock
+          sectionId="safety-compliance"
+          questions={[
+            {
+              question: 'What PPE is required in the pit area at FRC events?',
+              options: ['Hard hats and steel-toe boots', 'ANSI Z87.1 safety glasses and closed-toe shoes', 'Gloves and respirators only', 'No PPE required in pits'],
+              correctIndex: 1,
+              explanation: 'The game manual requires ANSI Z87.1 safety glasses and closed-toe, closed-heel shoes in pit areas and near the field.',
+            },
+            {
+              question: 'Before performing any work on the robot at an event, you must:',
+              options: ['Ask the head referee', 'Open the main breaker AND unplug the battery', 'Just turn off the driver station', 'Nothing special'],
+              correctIndex: 1,
+              explanation: 'FIRST advises opening the main breaker AND unplugging the battery to fully de-energize the robot before any work.',
+            },
+            {
+              question: 'What is the maximum average charging current for FRC robot batteries?',
+              options: ['2A', '6A', '10A', '20A'],
+              correctIndex: 1,
+              explanation: 'FIRST rules limit average charge current to 6A for the 12V SLA robot batteries.',
+            },
+            {
+              question: 'Before working on pneumatic components, you must:',
+              options: ['Only wear gloves', 'Vent all pressure and verify gauges read zero', 'Just turn off the compressor', 'Nothing -- pneumatics are safe'],
+              correctIndex: 1,
+              explanation: 'Pneumatic systems store energy under pressure. FIRST requires venting to atmosphere and verifying gauges read zero before any work on pneumatic components.',
+            },
+          ]}
+        />
       </section>
 
       <div className="grid gap-2">

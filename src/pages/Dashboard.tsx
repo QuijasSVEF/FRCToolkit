@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../hooks/useProgress';
-import { sections, getTotalSubsections } from '../data/sections';
-import {
-  Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library,
-  ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame,
-} from 'lucide-react';
+import { useBookmarks } from '../hooks/useBookmarks';
+import { useNotes } from '../hooks/useNotes';
+import { sections, getTotalSubsections, quizSections } from '../data/sections';
+import { Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library, ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame, Clock, Bookmark as BookmarkIcon, FileText } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
@@ -64,7 +63,9 @@ function BigProgressRing({ percent }: { percent: number }) {
 
 export default function Dashboard() {
   const { profile, updateProfile } = useAuth();
-  const { getSectionProgress, getTotalCompleted } = useProgress();
+  const { getSectionProgress, getTotalCompleted, isCompleted } = useProgress();
+  const { bookmarks } = useBookmarks();
+  const { recentNotes } = useNotes();
   const totalSubs = getTotalSubsections();
   const completed = getTotalCompleted();
   const overallPercent = totalSubs > 0 ? Math.round((completed / totalSubs) * 100) : 0;
@@ -83,6 +84,15 @@ export default function Dashboard() {
     return p > 0 && p < 100;
   });
   const nextSection = sections.find(s => getSectionProgress(s.id, s.subsections.length) === 0) || sections[0];
+
+  const getNextIncompleteTopic = (section: typeof sections[0]) => {
+    for (const sub of section.subsections) {
+      if (!isCompleted(section.id, sub.id)) {
+        return sub.title;
+      }
+    }
+    return null;
+  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
@@ -180,6 +190,9 @@ export default function Dashboard() {
             const gradient = colorMap[section.icon] || 'from-brand-500 to-brand-600';
             const progress = getSectionProgress(section.id, section.subsections.length);
             const completedCount = Math.round((progress / 100) * section.subsections.length);
+            const nextTopic = progress < 100 ? getNextIncompleteTopic(section) : null;
+            const hasQuiz = quizSections.includes(section.id);
+            const quizDone = hasQuiz && isCompleted(section.id, 'quiz-complete');
 
             return (
               <Link
@@ -191,16 +204,42 @@ export default function Dashboard() {
                   <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300`}>
                     <Icon className="w-5 h-5 text-white" />
                   </div>
-                  {progress === 100 && (
-                    <span className="badge bg-success-50 text-success-600 border border-success-100">Complete</span>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    {section.estimatedMinutes && (
+                      <span className="flex items-center gap-1 text-[11px] text-steel-400 font-medium">
+                        <Clock className="w-3 h-3" />
+                        ~{section.estimatedMinutes}min
+                      </span>
+                    )}
+                    {progress === 100 && (
+                      <span className="badge bg-success-50 text-success-600 border border-success-100">Complete</span>
+                    )}
+                  </div>
                 </div>
                 <h3 className="font-bold text-steel-900 group-hover:text-brand-700 transition-colors">
                   {section.title}
                 </h3>
+                {nextTopic && (
+                  <p className="text-xs text-brand-500 font-medium mt-0.5">Next: {nextTopic}</p>
+                )}
                 <p className="mt-1 text-sm text-steel-500 leading-relaxed line-clamp-2">
                   {section.description}
                 </p>
+                {hasQuiz && (
+                  <div className="mt-2">
+                    {quizDone ? (
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-success-50 text-success-600 border border-success-100">
+                        <CheckCircle2 className="w-3 h-3" />
+                        Quiz Complete
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-600 border border-amber-200">
+                        <FileText className="w-3 h-3" />
+                        Quiz Required
+                      </span>
+                    )}
+                  </div>
+                )}
                 <div className="mt-4">
                   <div className="flex items-center justify-between text-xs text-steel-400 mb-1.5">
                     <span>{completedCount} of {section.subsections.length} topics</span>
@@ -217,6 +256,51 @@ export default function Dashboard() {
             );
           })}
         </div>
+      </div>
+
+      <div className="mt-8">
+        <h2 className="text-lg font-bold text-steel-900 mb-3">Your Bookmarked Resources</h2>
+        {bookmarks.length === 0 ? (
+          <p className="text-sm text-steel-400 bg-steel-50 rounded-xl p-4 text-center">
+            Bookmark resources from any module to save them here.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {bookmarks.map(b => (
+              <a
+                key={b.id}
+                href={b.resource_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white rounded-xl border border-steel-200 p-4 hover:shadow-sm transition-shadow"
+              >
+                <BookmarkIcon className="w-4 h-4 text-brand-500 flex-shrink-0" />
+                <span className="text-sm font-medium text-steel-800">{b.resource_title}</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="mt-8">
+        <h2 className="text-lg font-bold text-steel-900 mb-3">Recent Notes</h2>
+        {recentNotes.length === 0 ? (
+          <p className="text-sm text-steel-400 bg-steel-50 rounded-xl p-4 text-center">
+            Add notes to any module to see them here.
+          </p>
+        ) : (
+          <div className="space-y-2">
+            {recentNotes.map(note => {
+              const sec = sections.find(s => s.id === note.section_id);
+              return (
+                <Link key={note.id} to={`/section/${note.section_id}`} className="block bg-white rounded-xl border border-steel-200 p-4 hover:shadow-sm transition-shadow">
+                  <p className="text-sm font-semibold text-steel-800">{sec?.title || note.section_id}</p>
+                  <p className="text-xs text-steel-400 mt-1 line-clamp-2">{note.content}</p>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

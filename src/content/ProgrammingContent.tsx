@@ -4,6 +4,7 @@ import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
 import CodeBlock from '../components/CodeBlock';
 import VideoEmbed from '../components/VideoEmbed';
+import QuizBlock from '../components/QuizBlock';
 
 export default function ProgrammingContent() {
   return (
@@ -202,6 +203,91 @@ jobs:
           embedUrl: 'https://www.youtube.com/embed/ihO-mw_4Qpo',
           description: 'FRC programming tutorial series by Team 6814 -- from basics to autonomous'
         }} />
+      </section>
+
+      <section id="git-basics">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Git & GitHub for Teams</h2>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          Version control is essential for FRC teams. All robot code should be in a Git repository.
+          GitHub is the most common platform in FRC, and FIRST teams can access GitHub's free
+          education tier for additional features.
+        </p>
+
+        <CollapsibleSection title="Git Fundamentals" defaultOpen>
+          <ul className="space-y-2 text-sm text-steel-600">
+            {[
+              'Repository (repo): A project folder tracked by Git. Contains all code and history.',
+              'Commit: A snapshot of changes. Write clear commit messages describing what changed and why.',
+              'Branch: A parallel line of development. Use branches for new features or experiments.',
+              'Pull Request (PR): A request to merge a branch into main. Use PRs for code review before merging.',
+              'Clone: Copy a remote repository to your local machine to start working.',
+              'Push/Pull: Push sends local commits to the remote; Pull downloads remote changes.',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full mt-1.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+
+        <div className="mt-4" />
+
+        <CollapsibleSection title="Recommended Team Workflow">
+          <ul className="space-y-2 text-sm text-steel-600">
+            {[
+              'The main branch is always deployable -- never commit broken code directly to main',
+              'Create feature branches for new work (e.g., feature/intake-command, fix/auto-path)',
+              'Use pull requests for code review before merging into main',
+              'Have at least one other student or mentor review PRs before merging',
+              'WPILib projects are Gradle-based -- the .gitignore should exclude build/, .gradle/, and IDE files',
+              'Commit early and often -- small commits are easier to review and revert',
+              'Tag releases before competitions (e.g., v1.0-regional, v1.1-playoffs)',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full mt-1.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+
+        <InfoBox variant="tip" title="Free for Students">
+          GitHub offers free Pro accounts through GitHub Education. Students can access private
+          repositories, Copilot, and additional CI/CD minutes at no cost.
+        </InfoBox>
+
+        <div className="mt-4 grid gap-2">
+          <ResourceCard resource={{ title: 'GitHub Education', url: 'https://education.github.com/', type: 'link', description: 'Free GitHub Pro for students and educators' }} />
+          <ResourceCard resource={{ title: 'Git Handbook', url: 'https://guides.github.com/introduction/git-handbook/', type: 'link', description: 'GitHub official Git guide' }} />
+        </div>
+      </section>
+
+      <section id="programming-quiz">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Knowledge Check</h2>
+        <QuizBlock
+          sectionId="programming"
+          questions={[
+            {
+              question: "WPILib's recommended code architecture for most teams is:",
+              options: ['Timed Robot with if/else', 'Command-Based framework', 'Raw motor control', 'Arduino-style loop()'],
+              correctIndex: 1,
+              explanation: 'The command-based framework organizes code into Subsystems (hardware) and Commands (actions), which maps naturally to robot functions.',
+            },
+            {
+              question: 'What tool does WPILib provide for characterizing mechanisms to get feedforward gains?',
+              options: ['PathPlanner', 'SysId', 'PhotonVision', 'AdvantageScope'],
+              correctIndex: 1,
+              explanation: "WPILib's System Identification (SysId) tool characterizes drivetrain and mechanism behavior to provide feedforward gains for accurate control.",
+            },
+            {
+              question: 'What are AprilTags used for in FRC?',
+              options: ['Team identification badges', 'Field localization and autonomous alignment', 'Score tracking', 'Battery monitoring'],
+              correctIndex: 1,
+              explanation: 'AprilTags are fiducial markers placed on the field that enable vision-based localization and autonomous alignment using cameras.',
+            },
+          ]}
+        />
       </section>
     </div>
   );

@@ -1,8 +1,8 @@
-import { useState, type ReactNode } from 'react';
+import { useState, useMemo, useRef, useEffect, type ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../hooks/useProgress';
-import { sections } from '../data/sections';
+import { sections, getAllSubsections } from '../data/sections';
 import {
   BookOpen, LayoutDashboard, LogOut, Menu, X, ChevronRight, User,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
@@ -38,22 +38,51 @@ function ProgressRing({ percent, size = 32 }: { percent: number; size?: number }
 export default function Layout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
   const { profile, signOut } = useAuth();
   const { getSectionProgress, getTotalCompleted } = useProgress();
   const location = useLocation();
   const navigate = useNavigate();
+  const searchRef = useRef<HTMLDivElement>(null);
   const totalSubs = sections.reduce((acc, s) => acc + s.subsections.length, 0);
   const completed = getTotalCompleted();
   const overallPercent = totalSubs > 0 ? Math.round((completed / totalSubs) * 100) : 0;
+
+  const allSubsections = useMemo(() => getAllSubsections(), []);
 
   const handleSignOut = async () => {
     await signOut();
     navigate('/');
   };
 
+  const term = searchQuery.toLowerCase();
+
   const filteredSections = searchQuery
-    ? sections.filter(s => s.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    ? sections.filter(s =>
+        s.title.toLowerCase().includes(term) ||
+        s.subsections.some(sub => sub.title.toLowerCase().includes(term))
+      )
     : sections;
+
+  const searchResults = useMemo(() => {
+    if (searchQuery.length < 2) return [];
+    return allSubsections
+      .filter(sub =>
+        sub.title.toLowerCase().includes(term) ||
+        sub.sectionTitle.toLowerCase().includes(term)
+      )
+      .slice(0, 8);
+  }, [searchQuery, term, allSubsections]);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <div className="min-h-screen bg-steel-50">
@@ -84,16 +113,39 @@ export default function Layout({ children }: { children: ReactNode }) {
           </button>
         </div>
 
-        <div className="px-4 pb-3 flex-shrink-0">
+        <div className="px-4 pb-3 flex-shrink-0" ref={searchRef}>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-steel-400" />
             <input
               type="text"
               placeholder="Search modules..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setShowDropdown(true);
+              }}
+              onFocus={() => setShowDropdown(true)}
               className="w-full pl-9 pr-3 py-2 bg-steel-50 border-0 rounded-xl text-sm text-steel-700 placeholder-steel-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:bg-white transition-all"
             />
+            {showDropdown && searchResults.length > 0 && searchQuery.length >= 2 && (
+              <div className="absolute left-0 right-0 top-full mt-1 bg-white border border-steel-200 rounded-xl shadow-lg z-50 overflow-hidden">
+                {searchResults.map((result) => (
+                  <button
+                    key={`${result.sectionId}-${result.subsectionId}`}
+                    className="w-full text-left px-3 py-2.5 hover:bg-steel-50 transition-colors border-b border-steel-100 last:border-b-0"
+                    onClick={() => {
+                      navigate(`/section/${result.sectionId}`);
+                      setShowDropdown(false);
+                      setSearchQuery('');
+                      setSidebarOpen(false);
+                    }}
+                  >
+                    <span className="block text-sm font-medium text-steel-800 truncate">{result.title}</span>
+                    <span className="block text-[11px] text-steel-400 truncate">{result.sectionTitle}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

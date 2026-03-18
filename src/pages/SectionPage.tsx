@@ -1,11 +1,12 @@
 import { useParams, Link } from 'react-router-dom';
 import { useProgress } from '../hooks/useProgress';
-import { sections } from '../data/sections';
-import {
-  ArrowLeft, ArrowRight, CheckCircle2, BookOpen,
+import { useNotes } from '../hooks/useNotes';
+import { sections, quizSections } from '../data/sections';
+import { Printer, ArrowLeft, ArrowRight, CheckCircle2, Clock, ChevronDown, Save, FileText, BookOpen,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library,
+  Code, Target, Award, Library, Trophy, Lock,
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import ProgressCheckbox from '../components/ProgressCheckbox';
 
 import GettingStartedContent from '../content/GettingStartedContent';
@@ -19,6 +20,7 @@ import ProgrammingContent from '../content/ProgrammingContent';
 import StrategyScoutingContent from '../content/StrategyScoutingContent';
 import AwardsContent from '../content/AwardsContent';
 import ResourcesContent from '../content/ResourcesContent';
+import FirstCompetitionContent from '../content/FirstCompetitionContent';
 
 const contentMap: Record<string, React.ComponentType> = {
   'getting-started': GettingStartedContent,
@@ -32,11 +34,12 @@ const contentMap: Record<string, React.ComponentType> = {
   'strategy-scouting': StrategyScoutingContent,
   'awards': AwardsContent,
   'resources': ResourcesContent,
+  'first-competition': FirstCompetitionContent,
 };
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library,
+  Code, Target, Award, Library, Trophy,
 };
 
 const gradientMap: Record<string, string> = {
@@ -51,6 +54,7 @@ const gradientMap: Record<string, string> = {
   Target: 'from-rose-500 to-red-500',
   Award: 'from-yellow-400 to-amber-500',
   Library: 'from-brand-500 to-blue-600',
+  Trophy: 'from-purple-500 to-indigo-500',
 };
 
 function MiniProgressRing({ percent }: { percent: number }) {
@@ -84,9 +88,71 @@ function MiniProgressRing({ percent }: { percent: number }) {
   );
 }
 
+function NotesSection({ sectionId }: { sectionId: string }) {
+  const { getNote, saveNote } = useNotes();
+  const [expanded, setExpanded] = useState(false);
+  const [noteContent, setNoteContent] = useState('');
+  const [saved, setSaved] = useState(false);
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (!initialized) {
+      const existingNote = getNote(sectionId);
+      if (existingNote) {
+        setNoteContent(existingNote.content);
+      }
+      setInitialized(true);
+    }
+  }, [getNote, sectionId, initialized]);
+
+  useEffect(() => {
+    setInitialized(false);
+    setNoteContent('');
+    setSaved(false);
+    setExpanded(false);
+  }, [sectionId]);
+
+  const handleSave = async () => {
+    await saveNote(sectionId, noteContent);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 2000);
+  };
+
+  return (
+    <div className="mt-6 border border-steel-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-steel-50 hover:bg-steel-100 transition-colors text-left"
+      >
+        <div className="flex items-center gap-2">
+          <FileText className="w-4 h-4 text-steel-500" />
+          <span className="text-sm font-semibold text-steel-700">My Notes</span>
+        </div>
+        <ChevronDown className={`w-4 h-4 text-steel-400 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} />
+      </button>
+      {expanded && (
+        <div className="p-4">
+          <textarea
+            value={noteContent}
+            onChange={(e) => setNoteContent(e.target.value)}
+            placeholder="Add your personal notes for this module..."
+            className="w-full h-32 text-sm border border-steel-200 rounded-lg p-3 resize-y focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+          />
+          <div className="flex items-center mt-2">
+            <button onClick={handleSave} className="btn-primary text-xs flex items-center gap-1.5">
+              <Save className="w-3.5 h-3.5" /> Save Notes
+            </button>
+            {saved && <span className="text-xs text-success-600 ml-2">Saved!</span>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SectionPage() {
   const { sectionId } = useParams<{ sectionId: string }>();
-  const { toggleSubsection, isCompleted, getSectionProgress } = useProgress();
+  const { toggleSubsection, isCompleted, getSectionProgress, progress } = useProgress();
 
   const section = sections.find((s) => s.id === sectionId);
   if (!section) {
@@ -103,19 +169,75 @@ export default function SectionPage() {
   const currentIndex = sections.indexOf(section);
   const prevSection = currentIndex > 0 ? sections[currentIndex - 1] : null;
   const nextSection = currentIndex < sections.length - 1 ? sections[currentIndex + 1] : null;
-  const progress = getSectionProgress(section.id, section.subsections.length);
+  const sectionProgress = getSectionProgress(section.id, section.subsections.length);
   const completedCount = section.subsections.filter(sub => isCompleted(section.id, sub.id)).length;
 
   const ContentComponent = contentMap[section.id];
   const SectionIcon = iconMap[section.icon] || BookOpen;
   const gradient = gradientMap[section.icon] || 'from-brand-500 to-brand-600';
 
+  const hasQuiz = quizSections.includes(section.id);
+  const quizCompleted = hasQuiz && progress.some(
+    (p) => p.section_id === section.id && p.subsection_id === `${section.id}-quiz` && p.completed
+  );
+  const lastSubsection = section.subsections[section.subsections.length - 1];
+
+  const renderProgressChecklist = () => (
+    <div className="space-y-0.5">
+      {section.subsections.map((sub) => {
+        const isLast = hasQuiz && sub.id === lastSubsection.id;
+        const isGated = isLast && !quizCompleted;
+
+        if (isGated) {
+          return (
+            <div key={sub.id}>
+              <button
+                disabled
+                className="checklist-item w-full text-left opacity-50 cursor-not-allowed"
+              >
+                <div className="relative flex-shrink-0 mt-0.5">
+                  <Lock className="w-5 h-5 text-steel-300" />
+                </div>
+                <span className="text-[13px] leading-snug text-steel-400">{sub.title}</span>
+              </button>
+              <p className="text-[11px] text-amber-600 ml-7 -mt-1 mb-1">Complete the quiz to finish this module.</p>
+            </div>
+          );
+        }
+
+        return (
+          <ProgressCheckbox
+            key={sub.id}
+            checked={isCompleted(section.id, sub.id)}
+            onChange={() => toggleSubsection(section.id, sub.id)}
+            label={sub.title}
+          />
+        );
+      })}
+    </div>
+  );
+
   return (
     <div className="max-w-5xl mx-auto animate-fade-in">
+      <style>{`
+        @media print {
+          .print-hidden { display: none !important; }
+          body { background: white !important; }
+        }
+      `}</style>
+
       <div className="mb-8">
-        <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm text-steel-400 hover:text-brand-600 transition-colors mb-4 group">
-          <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" /> Back to Dashboard
-        </Link>
+        <div className="flex items-center justify-between mb-4 print-hidden">
+          <Link to="/dashboard" className="inline-flex items-center gap-1.5 text-sm text-steel-400 hover:text-brand-600 transition-colors group">
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" /> Back to Dashboard
+          </Link>
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1.5 text-sm text-steel-400 hover:text-brand-600 transition-colors"
+          >
+            <Printer className="w-4 h-4" /> Print this module
+          </button>
+        </div>
 
         <div className="bg-white rounded-2xl border border-steel-200/80 p-6 shadow-sm">
           <div className="flex items-start gap-4">
@@ -125,16 +247,35 @@ export default function SectionPage() {
             <div className="flex-1 min-w-0">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <h1 className="text-2xl font-extrabold text-steel-900">{section.title}</h1>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h1 className="text-2xl font-extrabold text-steel-900">{section.title}</h1>
+                    {hasQuiz && (
+                      quizCompleted ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-success-50 text-success-600 border border-success-100">
+                          <CheckCircle2 className="w-3 h-3" /> Quiz Complete
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-600 border border-amber-100">
+                          <Clock className="w-3 h-3" /> Quiz Required
+                        </span>
+                      )
+                    )}
+                  </div>
                   <p className="text-steel-500 mt-1 text-sm leading-relaxed">{section.description}</p>
+                  {section.estimatedMinutes && (
+                    <div className="flex items-center gap-1 mt-1.5">
+                      <Clock className="w-3.5 h-3.5 text-steel-400" />
+                      <span className="text-xs text-steel-400 font-medium">{section.estimatedMinutes} min estimated</span>
+                    </div>
+                  )}
                 </div>
                 <div className="hidden sm:block flex-shrink-0">
-                  <MiniProgressRing percent={progress} />
+                  <MiniProgressRing percent={sectionProgress} />
                 </div>
               </div>
               <div className="mt-4 flex items-center gap-3">
                 <div className="flex-1 progress-bar">
-                  <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
+                  <div className="progress-bar-fill" style={{ width: `${sectionProgress}%` }} />
                 </div>
                 <span className="text-xs font-semibold text-steel-500 whitespace-nowrap">
                   {completedCount} / {section.subsections.length} topics
@@ -150,50 +291,34 @@ export default function SectionPage() {
           {ContentComponent && <ContentComponent />}
         </div>
 
-        <div className="hidden lg:block">
+        <div className="hidden lg:block print-hidden">
           <div className="sticky top-24 space-y-4">
             <div className="bg-white rounded-2xl border border-steel-200/80 p-5 shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-bold text-steel-800">Progress Checklist</h3>
-                <span className={`badge text-[10px] ${progress === 100 ? 'bg-success-50 text-success-600 border border-success-100' : 'bg-brand-50 text-brand-600 border border-brand-100'}`}>
-                  {progress}%
+                <span className={`badge text-[10px] ${sectionProgress === 100 ? 'bg-success-50 text-success-600 border border-success-100' : 'bg-brand-50 text-brand-600 border border-brand-100'}`}>
+                  {sectionProgress}%
                 </span>
               </div>
-              <div className="space-y-0.5">
-                {section.subsections.map((sub) => (
-                  <ProgressCheckbox
-                    key={sub.id}
-                    checked={isCompleted(section.id, sub.id)}
-                    onChange={() => toggleSubsection(section.id, sub.id)}
-                    label={sub.title}
-                  />
-                ))}
-              </div>
+              {renderProgressChecklist()}
             </div>
+            <NotesSection sectionId={section.id} />
           </div>
         </div>
       </div>
 
-      <div className="lg:hidden mt-8 bg-white rounded-2xl border border-steel-200/80 p-5 shadow-sm">
+      <div className="lg:hidden mt-8 bg-white rounded-2xl border border-steel-200/80 p-5 shadow-sm print-hidden">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-bold text-steel-800">Progress Checklist</h3>
-          <span className={`badge text-[10px] ${progress === 100 ? 'bg-success-50 text-success-600 border border-success-100' : 'bg-brand-50 text-brand-600 border border-brand-100'}`}>
-            {progress}%
+          <span className={`badge text-[10px] ${sectionProgress === 100 ? 'bg-success-50 text-success-600 border border-success-100' : 'bg-brand-50 text-brand-600 border border-brand-100'}`}>
+            {sectionProgress}%
           </span>
         </div>
-        <div className="space-y-0.5">
-          {section.subsections.map((sub) => (
-            <ProgressCheckbox
-              key={sub.id}
-              checked={isCompleted(section.id, sub.id)}
-              onChange={() => toggleSubsection(section.id, sub.id)}
-              label={sub.title}
-            />
-          ))}
-        </div>
+        {renderProgressChecklist()}
+        <NotesSection sectionId={section.id} />
       </div>
 
-      <div className="mt-10 flex items-stretch gap-4 border-t border-steel-100 pt-8">
+      <div className="mt-10 flex items-stretch gap-4 border-t border-steel-100 pt-8 print-hidden">
         {prevSection ? (
           <Link
             to={`/section/${prevSection.id}`}

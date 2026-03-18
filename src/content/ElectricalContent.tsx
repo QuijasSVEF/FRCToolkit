@@ -3,6 +3,7 @@ import InfoBox from '../components/InfoBox';
 import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
 import CodeBlock from '../components/CodeBlock';
+import QuizBlock from '../components/QuizBlock';
 
 export default function ElectricalContent() {
   return (
@@ -235,6 +236,119 @@ Note: CAN bus starts at roboRIO and ends at PD device
           <ResourceCard resource={{ title: 'WPILib Battery Guide', url: 'https://docs.wpilib.org/en/stable/docs/hardware/hardware-basics/robot-battery.html', type: 'link', description: 'Robot battery best practices' }} />
           <ResourceCard resource={{ title: 'MK ES17-12 Datasheet', url: 'https://www.mkbattery.com/application/files/6817/5105/7491/ES17-12.pdf', type: 'pdf', description: 'Battery specifications' }} />
         </div>
+      </section>
+
+      <section id="electrical-troubleshooting">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Troubleshooting Common Issues</h2>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          Electrical problems are the most common source of robot failures at events. Here is a
+          structured troubleshooting guide for the most frequent issues.
+        </p>
+
+        <div className="space-y-4">
+          <CollapsibleSection title="Robot Won't Enable" defaultOpen>
+            <ul className="space-y-2 text-sm text-steel-600">
+              {[
+                'Check main breaker is ON (push the red button in, not popped out)',
+                'Check battery voltage with a multimeter -- should be >12V under no load',
+                'Check Driver Station connection -- USB cable to roboRIO or wireless to radio',
+                'Check radio LEDs -- solid green means connected to field/DS',
+                'Verify roboRIO image version matches the Game Tools version installed on DS laptop',
+                'Check that team number is set correctly in both roboRIO and Driver Station',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-danger-500 rounded-full mt-1.5 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Robot Browns Out / Reboots During Match">
+            <ul className="space-y-2 text-sm text-steel-600">
+              {[
+                'Check battery internal resistance with Battery Beak -- replace if >0.020 ohms',
+                'Check wire gauge on high-current circuits (12 AWG minimum for 40A)',
+                'Check for loose connections, especially battery leads and main breaker terminals',
+                'Reduce peak current draw by staggering motor starts in code (don\'t command all motors to max simultaneously)',
+                'Use current limiting in motor controller configuration',
+                'Monitor battery voltage in Driver Station during matches to identify brownout patterns',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-warning-500 rounded-full mt-1.5 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </CollapsibleSection>
+
+          <CollapsibleSection title="CAN Device Not Found">
+            <ul className="space-y-2 text-sm text-steel-600">
+              {[
+                'Check CAN wiring continuity -- CAN_H to CAN_H, CAN_L to CAN_L through the chain',
+                'Check for duplicate CAN IDs -- every device must have a unique ID',
+                'Verify termination -- roboRIO at one end, PD device at the other (both have built-in 120 ohm terminators)',
+                'Check that device firmware is up to date using Phoenix Tuner or REV Hardware Client',
+                'Use Phoenix Tuner or REV Hardware Client to scan for devices and identify missing ones',
+                'Inspect connectors for loose or broken wires at each CAN junction',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-brand-500 rounded-full mt-1.5 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Motor Runs but in Wrong Direction">
+            <ul className="space-y-2 text-sm text-steel-600">
+              {[
+                'Invert the motor in software using .setInverted(true) -- this is the preferred fix',
+                'For brushed motors, you can swap the two motor leads at the motor controller',
+                'Never swap CAN_H and CAN_L -- this is a data bus, not motor power',
+                'For brushless motors, use the software inversion only (do not swap phase wires)',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-success-500 rounded-full mt-1.5 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </CollapsibleSection>
+        </div>
+      </section>
+
+      <section id="electrical-quiz">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Knowledge Check</h2>
+        <QuizBlock
+          sectionId="electrical"
+          questions={[
+            {
+              question: 'What gauge wire is the minimum for 40A breaker circuits (drive motors)?',
+              options: ['18 AWG', '14 AWG', '12 AWG', '6 AWG'],
+              correctIndex: 2,
+              explanation: '40A circuits require a minimum of 12 AWG (4 mm\u00B2) wire. Undersized wires cause brownouts and fail inspection.',
+            },
+            {
+              question: 'The CAN bus on an FRC robot should start at the _____ and end at the _____.',
+              options: ['Battery and motor', 'roboRIO and power distribution device', 'Radio and roboRIO', 'Any two devices'],
+              correctIndex: 1,
+              explanation: 'The CAN bus starts at the roboRIO CAN terminals and ends at the power distribution device, both of which have built-in 120\u03A9 termination resistors.',
+            },
+            {
+              question: 'What is the primary robot controller in FRC?',
+              options: ['Raspberry Pi', 'Arduino Mega', 'roboRIO 2.0', 'SPARK MAX'],
+              correctIndex: 2,
+              explanation: 'The roboRIO 2.0 is the main robot controller. It runs team code, controls hardware, and communicates with the driver station and field systems.',
+            },
+            {
+              question: 'How many robot batteries are allowed on the robot at one time?',
+              options: ['One', 'Two', 'Three', 'As many as you want'],
+              correctIndex: 0,
+              explanation: 'Only one legal 12V battery is allowed on the robot at a time per FIRST rules.',
+            },
+          ]}
+        />
       </section>
     </div>
   );

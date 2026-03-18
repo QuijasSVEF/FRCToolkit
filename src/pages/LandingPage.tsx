@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
   Code, Target, Award, Library, ArrowRight, CheckCircle2, BookOpen,
-  Play, Star, Sparkles, GraduationCap,
+  Play, Star, Sparkles, GraduationCap, Trophy,
 } from 'lucide-react';
 
 const features = [
@@ -15,14 +15,15 @@ const features = [
   { icon: Wrench, title: 'Mechanical Systems', desc: 'Drivetrain options, KitBot builds, CAD tools, and fabrication', color: 'from-slate-500 to-gray-600' },
   { icon: Zap, title: 'Electrical & Wiring', desc: 'Power distribution, motor controllers, CAN bus, and radio setup', color: 'from-yellow-500 to-amber-500' },
   { icon: Code, title: 'Programming', desc: 'WPILib, command-based architecture, autonomous, and vision', color: 'from-blue-600 to-brand-500' },
+  { icon: Trophy, title: 'Your First Competition', desc: 'Packing lists, pit setup, match day workflow, and what to expect', color: 'from-violet-500 to-purple-500' },
   { icon: Target, title: 'Strategy & Scouting', desc: 'Match strategy, scouting systems, data APIs, and alliance selection', color: 'from-rose-500 to-red-500' },
   { icon: Award, title: 'Awards', desc: 'Every award category, submission tips, Impact Award preparation', color: 'from-yellow-400 to-amber-500' },
   { icon: Library, title: 'Resources & Links', desc: '100+ curated links, embedded videos, official docs, and tools', color: 'from-brand-500 to-blue-600' },
 ];
 
 const stats = [
-  { value: '11', label: 'Learning Modules', icon: BookOpen },
-  { value: '65+', label: 'Topics Covered', icon: GraduationCap },
+  { value: '12', label: 'Learning Modules', icon: BookOpen },
+  { value: '75+', label: 'Topics Covered', icon: GraduationCap },
   { value: '100+', label: 'Resource Links', icon: Sparkles },
   { value: 'Free', label: 'Always Free', icon: Star },
 ];
@@ -123,7 +124,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-sm font-semibold text-brand-600 uppercase tracking-wider mb-3">Complete Curriculum</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-steel-900">11 Deep-Dive Learning Modules</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-steel-900">12 Deep-Dive Learning Modules</h2>
             <p className="mt-4 text-lg text-steel-500 max-w-2xl mx-auto">
               Each module contains detailed walkthroughs, official resources, embedded videos,
               comparison tables, and interactive checklists.

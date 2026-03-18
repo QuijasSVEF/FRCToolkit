@@ -6,6 +6,7 @@ export const sections: Section[] = [
     title: 'Getting Started',
     description: 'FRC overview, how to start a team, and first steps for new mentors',
     icon: 'Rocket',
+    estimatedMinutes: 20,
     subsections: [
       { id: 'what-is-frc', title: 'What is FRC?' },
       { id: 'starting-a-team', title: 'Starting a Team' },
@@ -19,6 +20,7 @@ export const sections: Section[] = [
     title: 'Season Timeline',
     description: 'Month-by-month guide from off-season through championship',
     icon: 'Calendar',
+    estimatedMinutes: 15,
     subsections: [
       { id: 'offseason', title: 'Off-Season (May - Aug)' },
       { id: 'preseason', title: 'Preseason (Sep - Dec)' },
@@ -26,6 +28,7 @@ export const sections: Section[] = [
       { id: 'build-season', title: 'Build Season (Jan - Feb)' },
       { id: 'competition-season', title: 'Competition Season (Mar - Apr)' },
       { id: 'championship', title: 'Championship' },
+      { id: 'district-vs-regional', title: 'District vs. Regional Model' },
     ],
   },
   {
@@ -33,6 +36,7 @@ export const sections: Section[] = [
     title: 'Team Organization',
     description: 'Roles, subteams, leadership, and team culture',
     icon: 'Users',
+    estimatedMinutes: 20,
     subsections: [
       { id: 'org-structure', title: 'Organizational Structure' },
       { id: 'subteams', title: 'Subteam Breakdown' },
@@ -40,6 +44,7 @@ export const sections: Section[] = [
       { id: 'mentor-roles', title: 'Mentor Roles & Responsibilities' },
       { id: 'team-culture', title: 'Building Team Culture' },
       { id: 'gracious-professionalism', title: 'Gracious Professionalism' },
+      { id: 'parent-communication', title: 'Parent & Volunteer Management' },
     ],
   },
   {
@@ -47,6 +52,7 @@ export const sections: Section[] = [
     title: 'Safety & Compliance',
     description: 'Youth protection, workshop safety, and legal requirements',
     icon: 'Shield',
+    estimatedMinutes: 25,
     subsections: [
       { id: 'youth-protection', title: 'Youth Protection Program' },
       { id: 'workshop-safety', title: 'Workshop Safety' },
@@ -61,6 +67,7 @@ export const sections: Section[] = [
     title: 'Funding & Grants',
     description: 'Budgets, sponsorships, grantwriting, and fundraising',
     icon: 'DollarSign',
+    estimatedMinutes: 25,
     subsections: [
       { id: 'budget-planning', title: 'Budget Planning' },
       { id: 'sponsorship-strategy', title: 'Sponsorship Strategy' },
@@ -75,6 +82,7 @@ export const sections: Section[] = [
     title: 'Mechanical Systems',
     description: 'Drivetrain, mechanisms, fabrication, and build practices',
     icon: 'Wrench',
+    estimatedMinutes: 30,
     subsections: [
       { id: 'workspace-setup', title: 'Workspace Setup' },
       { id: 'drivetrain-options', title: 'Drivetrain Options' },
@@ -82,6 +90,7 @@ export const sections: Section[] = [
       { id: 'kitbot', title: 'KitBot Build Guide' },
       { id: 'cad-tools', title: 'CAD & Design Tools' },
       { id: 'fabrication', title: 'Fabrication Techniques' },
+      { id: 'bumper-construction', title: 'Bumper Construction' },
     ],
   },
   {
@@ -89,6 +98,7 @@ export const sections: Section[] = [
     title: 'Electrical & Wiring',
     description: 'Power distribution, motor controllers, wiring diagrams, and CAN bus',
     icon: 'Zap',
+    estimatedMinutes: 35,
     subsections: [
       { id: 'control-system', title: 'Control System Overview' },
       { id: 'power-distribution', title: 'Power Distribution' },
@@ -97,6 +107,7 @@ export const sections: Section[] = [
       { id: 'can-bus', title: 'CAN Bus Wiring' },
       { id: 'radio-setup', title: 'Radio Configuration' },
       { id: 'batteries', title: 'Battery Management' },
+      { id: 'electrical-troubleshooting', title: 'Troubleshooting Common Issues' },
     ],
   },
   {
@@ -104,6 +115,7 @@ export const sections: Section[] = [
     title: 'Programming',
     description: 'Software architecture, WPILib, autonomous, and vision',
     icon: 'Code',
+    estimatedMinutes: 40,
     subsections: [
       { id: 'languages', title: 'Language Choices' },
       { id: 'wpilib-setup', title: 'WPILib Setup' },
@@ -113,6 +125,22 @@ export const sections: Section[] = [
       { id: 'vision', title: 'Vision & AprilTags' },
       { id: 'simulation', title: 'Simulation & Testing' },
       { id: 'ci-workflow', title: 'CI/CD Workflow' },
+      { id: 'git-basics', title: 'Git & GitHub for Teams' },
+    ],
+  },
+  {
+    id: 'first-competition',
+    title: 'Your First Competition',
+    description: 'Complete event survival guide from load-in to awards ceremony',
+    icon: 'Trophy',
+    estimatedMinutes: 25,
+    subsections: [
+      { id: 'what-to-expect', title: 'What to Expect' },
+      { id: 'pit-setup', title: 'Pit Setup & Organization' },
+      { id: 'robot-inspection', title: 'Robot Inspection' },
+      { id: 'match-day-flow', title: 'Match Day Flow' },
+      { id: 'alliance-selection-playoffs', title: 'Alliance Selection & Playoffs' },
+      { id: 'packing-checklist', title: 'Packing Checklist' },
     ],
   },
   {
@@ -120,6 +148,7 @@ export const sections: Section[] = [
     title: 'Strategy & Scouting',
     description: 'Match strategy, scouting systems, and alliance selection',
     icon: 'Target',
+    estimatedMinutes: 25,
     subsections: [
       { id: 'game-analysis', title: 'Game Analysis' },
       { id: 'scouting-system', title: 'Building a Scouting System' },
@@ -134,6 +163,7 @@ export const sections: Section[] = [
     title: 'Awards',
     description: 'Award categories, submissions, and documentation',
     icon: 'Award',
+    estimatedMinutes: 20,
     subsections: [
       { id: 'award-overview', title: 'Award Categories Overview' },
       { id: 'impact-award', title: 'FIRST Impact Award' },
@@ -147,6 +177,7 @@ export const sections: Section[] = [
     title: 'Resources & Links',
     description: 'Curated library of official docs, community tools, and videos',
     icon: 'Library',
+    estimatedMinutes: 15,
     subsections: [
       { id: 'official-first', title: 'Official FIRST Resources' },
       { id: 'wpilib-docs', title: 'WPILib Documentation' },
@@ -176,3 +207,11 @@ export function getAllSubsections() {
 export function getTotalSubsections() {
   return sections.reduce((total, section) => total + section.subsections.length, 0);
 }
+
+export const quizSections = [
+  'getting-started',
+  'safety-compliance',
+  'electrical',
+  'programming',
+  'strategy-scouting',
+];

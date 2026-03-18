@@ -164,6 +164,60 @@ export default function MechanicalContent() {
           <ResourceCard resource={{ title: 'FIRST Technical Resources', url: 'https://www.firstinspires.org/resources/library/frc/technical-resources', type: 'link', description: 'Official wiring, pneumatics, and design videos' }} />
         </div>
       </section>
+
+      <section id="bumper-construction">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Bumper Construction</h2>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          Bumpers are required on all FRC robots and are one of the most commonly failed inspection items.
+          Understanding bumper rules and building them correctly saves time at events.
+        </p>
+        <CollapsibleSection title="Bumper Construction Rules" defaultOpen>
+          <ul className="space-y-2 text-sm text-steel-600">
+            {[
+              'Bumpers must be made with pool noodles (2.5" round, cross-section) backed by 3/4" plywood or similar rigid material',
+              'Covered in fabric -- sturdy cloth that fully wraps the pool noodle and plywood assembly',
+              'Team numbers must be displayed on bumpers: minimum 4 inches tall, white numbers on red/blue background',
+              'Bumpers must be within the specified height range from the floor (check current season rules for exact measurements)',
+              'Bumpers must protect the full frame perimeter with limited gaps (check maximum gap allowance)',
+              'Bumper segments must be securely attached to the robot frame and easily removable for inspection',
+              'Pool noodle diameter must match specifications -- do not use undersized or oversized noodles',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full mt-1.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+
+        <div className="mt-4" />
+
+        <CollapsibleSection title="Common Bumper Inspection Failures">
+          <ul className="space-y-2 text-sm text-steel-600">
+            {[
+              'Numbers too small -- must be at minimum 4 inches tall and clearly legible',
+              'Numbers not properly contrasting -- white on blue (for blue alliance) and white on red (for red alliance)',
+              'Bumpers mounted too high or too low relative to the floor',
+              'Gaps between bumper segments exceed the maximum allowed',
+              'Pool noodles are the wrong diameter or have been compressed/damaged',
+              'Fabric not properly secured -- loose fabric can catch on field elements',
+              'Bumper backing material is too thin or not rigid enough',
+              'Bumper attachment to frame is not secure or not easily removable',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-warning-500 rounded-full mt-1.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+
+        <InfoBox variant="tip" title="Reversible Bumpers">
+          Many teams build reversible bumpers with red fabric on one side and blue on the other.
+          This saves time at events since you only need one set of bumpers. Attach team numbers
+          to both the red and blue sides with the correct contrasting colors.
+        </InfoBox>
+      </section>
     </div>
   );
 }

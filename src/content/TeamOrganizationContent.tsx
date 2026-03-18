@@ -2,10 +2,21 @@ import ResourceCard from '../components/ResourceCard';
 import InfoBox from '../components/InfoBox';
 import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
+import VideoEmbed from '../components/VideoEmbed';
+import CodeBlock from '../components/CodeBlock';
 
 export default function TeamOrganizationContent() {
   return (
     <div className="space-y-8">
+      <div className="mb-4">
+        <VideoEmbed video={{
+          title: 'Building a Strong FRC Team Culture',
+          url: 'https://www.youtube.com/watch?v=Kxs5GqLHGbA',
+          embedUrl: 'https://www.youtube.com/embed/Kxs5GqLHGbA',
+          description: 'Tips for organizing an effective FRC team from experienced mentors'
+        }} />
+      </div>
+
       <section id="org-structure">
         <h2 className="text-xl font-bold text-steel-900 mb-4">Organizational Structure</h2>
         <p className="text-steel-600 leading-relaxed mb-4">
@@ -71,6 +82,72 @@ export default function TeamOrganizationContent() {
             </li>
           </ul>
         </CollapsibleSection>
+
+        <div className="mt-6">
+          <h3 className="font-semibold text-steel-800 text-sm mb-3">Meeting Agenda Template</h3>
+          <CodeBlock language="Meeting Agenda Template" code={`TEAM MEETING AGENDA
+==================
+Date: [DATE]    |    Time: [START] - [END]
+Location: [ROOM/WORKSHOP]
+
+1. OPENING & ANNOUNCEMENTS (5 min)
+   - Attendance check
+   - Upcoming dates and deadlines
+
+2. SUBTEAM STATUS UPDATES (15 min)
+   - Mechanical:
+   - Electrical:
+   - Programming:
+   - Business/Outreach:
+   - Strategy:
+
+3. BLOCKERS & HELP NEEDED (10 min)
+   - Cross-subteam dependencies
+   - Resource or material needs
+
+4. UPCOMING DEADLINES (5 min)
+   - This week:
+   - Next week:
+   - Competition prep milestones:
+
+5. ACTION ITEMS (5 min)
+   - [WHO] will [WHAT] by [WHEN]
+
+6. CLOSING (5 min)
+   - Next meeting date/time
+   - Cleanup assignments`} />
+        </div>
+
+        <div className="mt-4">
+          <h3 className="font-semibold text-steel-800 text-sm mb-3">Weekly Practice Schedule Template</h3>
+          <CodeBlock language="Weekly Schedule Template" code={`WEEKLY TEAM SCHEDULE
+====================
+
+MONDAY    | 4:00-6:00 PM | Mechanical Build Session
+          |              | Electrical wiring/testing
+          |              |
+TUESDAY   | 4:00-6:00 PM | Programming Session
+          |              | CAD design reviews
+          |              |
+WEDNESDAY | 4:00-6:00 PM | Full Team Build Session
+          |              | All subteams active
+          |              |
+THURSDAY  | 4:00-6:00 PM | Driver Practice (if robot ready)
+          |              | Strategy & scouting prep
+          |              |
+FRIDAY    | 4:00-5:30 PM | Business/Outreach Meeting
+          |              | Award writing sessions
+          |              |
+SATURDAY  | 9:00 AM-2:00 PM | Extended Build Session
+          |              | Integration testing
+          |              | Team lunch
+
+Notes:
+- Adjust times based on school schedule
+- During build season, add 1-2 extra sessions/week
+- Always start with safety briefing
+- End each session with cleanup (15 min)`} />
+        </div>
       </section>
 
       <section id="mentor-roles">
@@ -123,6 +200,61 @@ export default function TeamOrganizationContent() {
           At events, this means helping other teams with mechanical or programming issues in the pits,
           sharing spare parts, congratulating opponents, and treating volunteers and event staff with
           genuine respect. These behaviors are observed by award judges.
+        </InfoBox>
+      </section>
+
+      <section id="parent-communication">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Parent & Volunteer Management</h2>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          Parent engagement is one of the biggest factors in team sustainability. Teams with strong
+          parent support have more reliable funding, better travel logistics, and more consistent
+          volunteer coverage.
+        </p>
+
+        <CollapsibleSection title="Parent Orientation Checklist" defaultOpen>
+          <ul className="space-y-2 text-sm text-steel-600">
+            {[
+              'Run a parent orientation meeting at the start of the season explaining what FRC is',
+              'Clearly communicate the time commitment: build sessions, weekend events, travel',
+              'Explain travel expectations and costs (hotels, meals, transportation)',
+              'Set up a parent communication channel (email list, GroupMe, Remind app, or similar)',
+              'Share the season calendar with all competition dates and deadlines',
+              'Explain the fundraising model and how parents can contribute',
+              'Invite parents to visit the workshop and see what students are building',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-brand-500 rounded-full mt-1.5 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </CollapsibleSection>
+
+        <div className="mt-4" />
+
+        <CollapsibleSection title="Volunteer Roles for Parents">
+          <div className="grid sm:grid-cols-2 gap-3">
+            {[
+              { role: 'Travel Coordinator', desc: 'Book hotels, coordinate bus/carpool, manage travel forms and waivers' },
+              { role: 'Food Coordinator', desc: 'Organize meals for build sessions and events, manage dietary needs' },
+              { role: 'Fundraising Committee', desc: 'Plan and execute fundraising events, corporate sponsor outreach' },
+              { role: 'Pit Crew Parents', desc: 'Help with pit setup, teardown, and logistics at competition events' },
+              { role: 'Event Chaperones', desc: 'Supervise students at events, ensure safety and team rules are followed' },
+              { role: 'Communications Lead', desc: 'Manage parent email list, social media, newsletter updates' },
+            ].map((item) => (
+              <div key={item.role} className="bg-steel-50 rounded-lg p-3">
+                <p className="text-xs font-semibold text-steel-800">{item.role}</p>
+                <p className="text-xs text-steel-500 mt-1">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </CollapsibleSection>
+
+        <InfoBox variant="success" title="Booster Organizations">
+          Many teams form a parent booster organization (501(c)(3) or similar) to handle fundraising,
+          tax-deductible donations, and team logistics. This separates team finances from the school
+          and gives parents a formal structure for contributing. Parent buy-in is critical -- the more
+          parents understand and support FRC, the more sustainable your team becomes.
         </InfoBox>
       </section>
 

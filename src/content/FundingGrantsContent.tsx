@@ -34,6 +34,66 @@ export default function FundingGrantsContent() {
         <div className="mt-4 grid gap-2">
           <ResourceCard resource={{ title: 'FIRST Example Budget (PDF)', url: 'https://info.firstinspires.org/hubfs/web/program/frc/resources/example-budget.pdf', type: 'pdf', description: 'FIRST median team budget reference' }} />
         </div>
+        <div className="mt-6">
+          <h3 className="font-semibold text-steel-800 text-sm mb-3">Sample Team Budget Template</h3>
+          <CodeBlock language="CSV - Team Budget Template" code={`Category,Budgeted Amount,Actual,Notes
+Registration,$6000,,FIRST team registration fee
+Event Fees,$2000,,2 district events or 1 regional
+Robot Parts,$5000,,Motors, gears, frame, sensors, pneumatics
+Tools & Shop Supplies,$2000,,Higher in year 1; reduces over time
+Travel & Lodging,$5000,,Hotel, fuel/bus, meals at events
+Safety Equipment,$500,,Safety glasses, first aid, PPE
+Team Shirts & Branding,$1500,,Shirts, pit banner, stickers, outreach materials
+Outreach Materials,$500,,Demo supplies, community event costs
+Batteries & Charging,$400,,4-6 batteries plus chargers
+Miscellaneous,$600,,Unexpected expenses buffer
+TOTAL,$23500,,Adjust based on your region and events`} />
+        </div>
+        <div className="mt-4">
+          <h3 className="font-semibold text-steel-800 text-sm mb-3">Sponsorship Email Template</h3>
+          <CodeBlock language="Email Template - Sponsorship Request" code={`Subject: Partnership Opportunity with [TEAM NAME] - FRC Robotics Team [NUMBER]
+
+Dear [CONTACT NAME],
+
+My name is [STUDENT NAME], and I am a member of [TEAM NAME],
+FRC Robotics Team [NUMBER] based at [SCHOOL/ORGANIZATION] in
+[CITY, STATE].
+
+We are a high school robotics team competing in the FIRST
+Robotics Competition (FRC), an international program where
+students design, build, and program 120-pound industrial robots.
+Our team of [NUMBER] students develops real engineering,
+programming, business, and leadership skills through this program.
+
+We are reaching out to explore a sponsorship partnership with
+[COMPANY NAME]. Your support would directly fund:
+- Robot materials and fabrication costs
+- Competition registration and travel
+- Tools and safety equipment for our workshop
+- STEM outreach events in our community
+
+In return, we offer sponsor recognition including:
+- Logo placement on our robot and team shirts
+- Recognition on our website and social media
+- Invitation to our workshop for demos and presentations
+- Networking access with [NUMBER] students pursuing STEM careers
+
+We would welcome the opportunity to give you a tour of our
+workshop or bring our robot for a demonstration at your office.
+
+Our sponsorship tiers range from $100 to $5,000+, and we also
+gratefully accept in-kind donations of materials, tools, or
+professional services.
+
+Thank you for considering supporting the next generation of
+engineers and innovators. We would love to discuss this further
+at your convenience.
+
+Sincerely,
+[STUDENT NAME]
+[TEAM NAME] - FRC Team [NUMBER]
+[EMAIL] | [PHONE] | [WEBSITE]`} />
+        </div>
       </section>
 
       <section id="sponsorship-strategy">

@@ -1,3 +1,4 @@
+import DataTable from '../components/DataTable';
 import InfoBox from '../components/InfoBox';
 import ResourceCard from '../components/ResourceCard';
 
@@ -142,6 +143,45 @@ export default function SeasonTimelineContent() {
           </div>
         ))}
       </div>
+
+      <section id="district-vs-regional">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">District vs. Regional Model</h2>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          FRC competitions operate under two models depending on your geographic area. Understanding
+          which model applies to your team affects scheduling, costs, and your path to Championship.
+        </p>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          Some areas use the <strong>Regional model</strong> where teams attend 1-3 standalone Regional
+          events and win to advance to Championship. Other areas use the <strong>District model</strong>
+          where teams attend 2 smaller District events, earn ranking points, and top teams advance to a
+          District Championship, then to World Championship. Your Program Delivery Partner determines
+          which model your area uses.
+        </p>
+        <DataTable
+          caption="Regional vs. District Model Comparison"
+          columns={[
+            { key: 'aspect', header: 'Aspect', width: '25%' },
+            { key: 'regional', header: 'Regional Model' },
+            { key: 'district', header: 'District Model' },
+          ]}
+          rows={[
+            { aspect: 'Events per team', regional: '1-3 Regional events', district: '2 District events + District Championship (if qualified)' },
+            { aspect: 'Event cost', regional: 'Higher per-event ($5,000+)', district: 'Lower per-event (~$2,500-3,500 each)' },
+            { aspect: 'Total cost', regional: 'Fewer events but higher individual cost', district: 'More events but lower per-event cost' },
+            { aspect: 'Advancement', regional: 'Win event or earn wild card slot', district: 'Accumulate District ranking points across events' },
+            { aspect: 'Event size', regional: '40-60+ teams, 2.5-3 days', district: '24-40 teams, 1.5-2 days' },
+            { aspect: 'Path to Championship', regional: 'Win Regional or earn at-large bid', district: 'Top District ranking points advance to District Championship, then top teams to Worlds' },
+          ]}
+        />
+        <InfoBox variant="info" title="Expansion of Districts">
+          FIRST is gradually expanding the District model to more areas. Districts currently operate
+          in regions like New England, Michigan, Ontario, Pacific Northwest, Mid-Atlantic, Indiana,
+          Texas, and others. Check the FIRST Events page to see which model applies to your area.
+        </InfoBox>
+        <div className="mt-4 grid gap-2">
+          <ResourceCard resource={{ title: 'FIRST Events & Districts', url: 'https://frc-events.firstinspires.org/2026/Events/EventList', type: 'link', description: 'Find events and see your district or regional assignments' }} />
+        </div>
+      </section>
 
       <div className="grid gap-2">
         <ResourceCard resource={{ title: 'FRC Season Materials', url: 'https://www.firstinspires.org/resources/library/frc/season-materials', type: 'link', description: 'Official calendars and season docs' }} />
