@@ -2,6 +2,7 @@ import ResourceCard from '../components/ResourceCard';
 import InfoBox from '../components/InfoBox';
 import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
+import VideoEmbed from '../components/VideoEmbed';
 
 export default function FirstCompetitionContent() {
   return (
@@ -40,6 +41,14 @@ export default function FirstCompetitionContent() {
           Arrive early. The teams that set up their pit first and pass inspection first get the most
           practice match time.
         </InfoBox>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: '2026 REBUILT Game Animation',
+            url: 'https://www.youtube.com/watch?v=_fybREErgyM',
+            embedUrl: 'https://www.youtube.com/embed/_fybREErgyM',
+            description: 'Watch the official game animation to understand match structure and scoring'
+          }} />
+        </div>
       </section>
 
       <section id="pit-setup">

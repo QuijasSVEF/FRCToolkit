@@ -167,7 +167,11 @@ export const sections: Section[] = [
     subsections: [
       { id: 'award-overview', title: 'Award Categories Overview' },
       { id: 'impact-award', title: 'FIRST Impact Award' },
+      { id: 'engineering-inspiration', title: 'Engineering Inspiration Award' },
       { id: 'engineering-awards', title: 'Engineering Awards' },
+      { id: 'woodie-flowers', title: 'Woodie Flowers Award' },
+      { id: 'deans-list', title: "Dean's List Award" },
+      { id: 'safety-award', title: 'Safety Award' },
       { id: 'submission-tips', title: 'Submission Tips & Timeline' },
       { id: 'documentation', title: 'Documentation Best Practices' },
     ],

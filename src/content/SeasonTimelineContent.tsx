@@ -1,6 +1,7 @@
 import DataTable from '../components/DataTable';
 import InfoBox from '../components/InfoBox';
 import ResourceCard from '../components/ResourceCard';
+import VideoEmbed from '../components/VideoEmbed';
 
 const timelineItems = [
   {
@@ -118,6 +119,14 @@ export default function SeasonTimelineContent() {
           By Kickoff, students should already have skills, the team should have funding, and
           award drafts should be underway. Build season is for executing a plan, not starting from scratch.
         </InfoBox>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: '2026 REBUILT Game Animation',
+            url: 'https://www.youtube.com/watch?v=_fybREErgyM',
+            embedUrl: 'https://www.youtube.com/embed/_fybREErgyM',
+            description: 'Official 2026 FIRST Robotics Competition game reveal animation'
+          }} />
+        </div>
       </div>
 
       <div className="relative">

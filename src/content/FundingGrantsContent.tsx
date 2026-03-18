@@ -3,6 +3,7 @@ import InfoBox from '../components/InfoBox';
 import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
 import CodeBlock from '../components/CodeBlock';
+import VideoEmbed from '../components/VideoEmbed';
 
 export default function FundingGrantsContent() {
   return (
@@ -93,6 +94,14 @@ Sincerely,
 [STUDENT NAME]
 [TEAM NAME] - FRC Team [NUMBER]
 [EMAIL] | [PHONE] | [WEBSITE]`} />
+        </div>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'About FIRST Robotics Competition',
+            url: 'https://www.youtube.com/watch?v=Jd29kzjclV0',
+            embedUrl: 'https://www.youtube.com/embed/Jd29kzjclV0',
+            description: 'Share this official FIRST overview with potential sponsors to explain what FRC is'
+          }} />
         </div>
       </section>
 

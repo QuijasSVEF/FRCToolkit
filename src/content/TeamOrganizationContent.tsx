@@ -10,10 +10,10 @@ export default function TeamOrganizationContent() {
     <div className="space-y-8">
       <div className="mb-4">
         <VideoEmbed video={{
-          title: 'Building a Strong FRC Team Culture',
-          url: 'https://www.youtube.com/watch?v=Kxs5GqLHGbA',
-          embedUrl: 'https://www.youtube.com/embed/Kxs5GqLHGbA',
-          description: 'Tips for organizing an effective FRC team from experienced mentors'
+          title: 'Goal Setting for FRC Teams - Mike Corsetto (1678 Citrus Circuits)',
+          url: 'https://www.youtube.com/watch?v=TyBWSDEIuXI',
+          embedUrl: 'https://www.youtube.com/embed/TyBWSDEIuXI',
+          description: 'How to set effective goals for your FRC team, from a veteran mentor'
         }} />
       </div>
 

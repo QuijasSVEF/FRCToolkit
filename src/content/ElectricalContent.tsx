@@ -4,6 +4,7 @@ import DataTable from '../components/DataTable';
 import CollapsibleSection from '../components/CollapsibleSection';
 import CodeBlock from '../components/CodeBlock';
 import QuizBlock from '../components/QuizBlock';
+import VideoEmbed from '../components/VideoEmbed';
 
 export default function ElectricalContent() {
   return (
@@ -72,6 +73,14 @@ export default function ElectricalContent() {
           WPILib's Zero-to-Robot guide recommends building this on a test board first,
           before integrating onto the robot frame.
         </p>
+        <div className="mb-6">
+          <VideoEmbed video={{
+            title: 'How to Wire an FRC Robot',
+            url: 'https://www.youtube.com/watch?v=lGgIhxYuSHM',
+            embedUrl: 'https://www.youtube.com/embed/lGgIhxYuSHM',
+            description: 'Official FIRST/WPI step-by-step wiring guide for the FRC control system'
+          }} />
+        </div>
         <CodeBlock language="Power Distribution (Reference Layout)" code={`POWER PATH (typical FRC robot)
 ==============================
 
@@ -235,6 +244,14 @@ Note: CAN bus starts at roboRIO and ends at PD device
         <div className="mt-4 grid gap-2">
           <ResourceCard resource={{ title: 'WPILib Battery Guide', url: 'https://docs.wpilib.org/en/stable/docs/hardware/hardware-basics/robot-battery.html', type: 'link', description: 'Robot battery best practices' }} />
           <ResourceCard resource={{ title: 'MK ES17-12 Datasheet', url: 'https://www.mkbattery.com/application/files/6817/5105/7491/ES17-12.pdf', type: 'pdf', description: 'Battery specifications' }} />
+        </div>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'How Do I Keep My Robot Running?',
+            url: 'https://www.youtube.com/watch?v=3eB8Eg4zRg0',
+            embedUrl: 'https://www.youtube.com/embed/3eB8Eg4zRg0',
+            description: 'Tips from AndyMark on battery management, maintenance, and keeping your robot reliable'
+          }} />
         </div>
       </section>
 

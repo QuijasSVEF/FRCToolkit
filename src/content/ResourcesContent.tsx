@@ -115,6 +115,30 @@ const videos = [
     embedUrl: 'https://www.youtube.com/embed/3eB8Eg4zRg0',
     description: 'AndyMark tips and tricks for robot reliability at events',
   },
+  {
+    title: 'Effective FIRST Strategies 2025 - Karthik Kanagasabapathy',
+    url: 'https://www.youtube.com/watch?v=cemXDEzBMhM',
+    embedUrl: 'https://www.youtube.com/embed/cemXDEzBMhM',
+    description: 'The definitive FRC strategy presentation on design, match planning, and scouting',
+  },
+  {
+    title: 'Goal Setting for FRC Teams - Mike Corsetto (1678)',
+    url: 'https://www.youtube.com/watch?v=TyBWSDEIuXI',
+    embedUrl: 'https://www.youtube.com/embed/TyBWSDEIuXI',
+    description: 'How to set effective team goals from a veteran mentor on Team 1678',
+  },
+  {
+    title: '2025 Safety Animation Winner - Team 1986',
+    url: 'https://www.youtube.com/watch?v=N0NpnYW-Z8o',
+    embedUrl: 'https://www.youtube.com/embed/N0NpnYW-Z8o',
+    description: 'Award-winning safety animation showcasing FRC safety culture',
+  },
+  {
+    title: 'How to Adjust the Pressure Relief Valve',
+    url: 'https://www.youtube.com/watch?v=foQlAigAd5c',
+    embedUrl: 'https://www.youtube.com/embed/foQlAigAd5c',
+    description: 'Official FIRST guide on pneumatic pressure relief valve adjustment',
+  },
 ];
 
 export default function ResourcesContent() {

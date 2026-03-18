@@ -55,10 +55,10 @@ export default function SafetyComplianceContent() {
         </CollapsibleSection>
         <div className="mt-6">
           <VideoEmbed video={{
-            title: 'FRC Team Safety Overview',
-            url: 'https://www.youtube.com/watch?v=4vC54aq7dDs',
-            embedUrl: 'https://www.youtube.com/embed/4vC54aq7dDs',
-            description: 'FIRST safety resources and best practices for FRC teams'
+            title: '2025 Safety Animation Winner - Team 1986',
+            url: 'https://www.youtube.com/watch?v=N0NpnYW-Z8o',
+            embedUrl: 'https://www.youtube.com/embed/N0NpnYW-Z8o',
+            description: 'Award-winning safety animation showcasing FRC safety culture'
           }} />
         </div>
       </section>
@@ -155,6 +155,14 @@ export default function SafetyComplianceContent() {
             ))}
           </ul>
         </CollapsibleSection>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'How to Adjust the Pressure Relief Valve',
+            url: 'https://www.youtube.com/watch?v=foQlAigAd5c',
+            embedUrl: 'https://www.youtube.com/embed/foQlAigAd5c',
+            description: 'Official FIRST guide on properly adjusting pneumatic relief valves for FRC robots'
+          }} />
+        </div>
       </section>
 
       <section id="event-safety">

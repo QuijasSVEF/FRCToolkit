@@ -28,10 +28,10 @@ export default function StrategyScoutingContent() {
         </CollapsibleSection>
         <div className="mt-6">
           <VideoEmbed video={{
-            title: 'FRC Match Strategy Fundamentals',
-            url: 'https://www.youtube.com/watch?v=0bnPqfPJmkQ',
-            embedUrl: 'https://www.youtube.com/embed/0bnPqfPJmkQ',
-            description: 'Karthik from Spectrum 3847 on FRC strategy and design principles'
+            title: 'Effective FIRST Strategies 2025 - Karthik Kanagasabapathy',
+            url: 'https://www.youtube.com/watch?v=cemXDEzBMhM',
+            embedUrl: 'https://www.youtube.com/embed/cemXDEzBMhM',
+            description: 'The definitive FRC strategy presentation covering strategic design, match planning, and scouting'
           }} />
         </div>
       </section>
@@ -138,6 +138,14 @@ export default function StrategyScoutingContent() {
           flexible support. Prioritize reliability over peak performance -- a robot that works
           every match is more valuable than one that scores high sometimes but breaks down.
         </InfoBox>
+        <div className="mt-6">
+          <VideoEmbed video={{
+            title: 'FRC Alliance Selection & Pick Lists Crash Course',
+            url: 'https://www.youtube.com/watch?v=R11PUq_m8Fk',
+            embedUrl: 'https://www.youtube.com/embed/R11PUq_m8Fk',
+            description: 'How to build data-driven pick lists for FRC alliance selection using Tableau'
+          }} />
+        </div>
       </section>
 
       <section id="driver-practice">

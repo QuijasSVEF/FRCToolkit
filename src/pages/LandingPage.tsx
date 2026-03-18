@@ -15,7 +15,7 @@ const features = [
   { icon: Wrench, title: 'Mechanical Systems', desc: 'Drivetrain options, KitBot builds, CAD tools, and fabrication', color: 'from-slate-500 to-gray-600' },
   { icon: Zap, title: 'Electrical & Wiring', desc: 'Power distribution, motor controllers, CAN bus, and radio setup', color: 'from-yellow-500 to-amber-500' },
   { icon: Code, title: 'Programming', desc: 'WPILib, command-based architecture, autonomous, and vision', color: 'from-blue-600 to-brand-500' },
-  { icon: Trophy, title: 'Your First Competition', desc: 'Packing lists, pit setup, match day workflow, and what to expect', color: 'from-violet-500 to-purple-500' },
+  { icon: Trophy, title: 'Your First Competition', desc: 'Packing lists, pit setup, match day workflow, and what to expect', color: 'from-cyan-500 to-teal-500' },
   { icon: Target, title: 'Strategy & Scouting', desc: 'Match strategy, scouting systems, data APIs, and alliance selection', color: 'from-rose-500 to-red-500' },
   { icon: Award, title: 'Awards', desc: 'Every award category, submission tips, Impact Award preparation', color: 'from-yellow-400 to-amber-500' },
   { icon: Library, title: 'Resources & Links', desc: '100+ curated links, embedded videos, official docs, and tools', color: 'from-brand-500 to-blue-600' },
@@ -23,7 +23,7 @@ const features = [
 
 const stats = [
   { value: '12', label: 'Learning Modules', icon: BookOpen },
-  { value: '75+', label: 'Topics Covered', icon: GraduationCap },
+  { value: '80+', label: 'Topics Covered', icon: GraduationCap },
   { value: '100+', label: 'Resource Links', icon: Sparkles },
   { value: 'Free', label: 'Always Free', icon: Star },
 ];
