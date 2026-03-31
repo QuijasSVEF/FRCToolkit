@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, CheckCircle, BookMarked, FileText, TrendingUp, ArrowRight } from 'lucide-react';
 import { adminApi, type Analytics } from '../../lib/adminApi';
-import { sections } from '../../data/sections';
+import { useSections } from '../../contexts/SectionsContext';
 
 function StatCard({ label, value, icon: Icon, color }: {
   label: string;
@@ -59,7 +59,7 @@ function MiniBarChart({ data, label }: { data: { date: string; count: number }[]
   );
 }
 
-function SectionLeaderboard({ completions }: { completions: Record<string, number> }) {
+function SectionLeaderboard({ completions, sections }: { completions: Record<string, number>; sections: { id: string; title: string }[] }) {
   const sorted = sections
     .map(s => ({ id: s.id, title: s.title, count: completions[s.id] || 0 }))
     .sort((a, b) => b.count - a.count);
@@ -88,6 +88,7 @@ function SectionLeaderboard({ completions }: { completions: Record<string, numbe
 }
 
 export default function AdminDashboard() {
+  const { sections } = useSections();
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -168,7 +169,7 @@ export default function AdminDashboard() {
         <MiniBarChart data={analytics.dailySignups} label="Daily Signups (Last 30 Days)" />
       </div>
 
-      <SectionLeaderboard completions={analytics.sectionCompletions} />
+      <SectionLeaderboard completions={analytics.sectionCompletions} sections={sections} />
     </div>
   );
 }

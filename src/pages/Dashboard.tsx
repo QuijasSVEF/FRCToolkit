@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../hooks/useProgress';
 import { useBookmarks } from '../hooks/useBookmarks';
 import { useNotes } from '../hooks/useNotes';
-import { sections, getTotalSubsections, quizSections } from '../data/sections';
+import { useSections } from '../contexts/SectionsContext';
 import { Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library, ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame, Clock, Bookmark as BookmarkIcon, FileText } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -66,6 +66,7 @@ export default function Dashboard() {
   const { getSectionProgress, getTotalCompleted, isCompleted } = useProgress();
   const { bookmarks } = useBookmarks();
   const { recentNotes } = useNotes();
+  const { sections, quizSections, getTotalSubsections } = useSections();
   const totalSubs = getTotalSubsections();
   const completed = getTotalCompleted();
   const overallPercent = totalSubs > 0 ? Math.round((completed / totalSubs) * 100) : 0;

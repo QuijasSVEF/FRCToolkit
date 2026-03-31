@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useProgress } from '../hooks/useProgress';
 import { useNotes } from '../hooks/useNotes';
-import { sections, quizSections } from '../data/sections';
+import { useSections } from '../contexts/SectionsContext';
 import { Printer, ArrowLeft, ArrowRight, CheckCircle2, Clock, ChevronDown, Save, FileText, BookOpen,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
   Code, Target, Award, Library, Trophy, Lock,
@@ -153,6 +153,7 @@ function NotesSection({ sectionId }: { sectionId: string }) {
 export default function SectionPage() {
   const { sectionId } = useParams<{ sectionId: string }>();
   const { toggleSubsection, isCompleted, getSectionProgress, progress } = useProgress();
+  const { sections, quizSections } = useSections();
 
   const section = sections.find((s) => s.id === sectionId);
   if (!section) {

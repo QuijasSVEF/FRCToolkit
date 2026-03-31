@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, CheckCircle, Circle, BookMarked, FileText, ExternalLink } from 'lucide-react';
 import { adminApi, type AdminUser, type UserDetail } from '../../lib/adminApi';
-import { sections } from '../../data/sections';
+import { useSections } from '../../contexts/SectionsContext';
 
 export default function AdminUserProgress() {
   const { userId } = useParams<{ userId: string }>();
+  const { sections } = useSections();
   const [user, setUser] = useState<AdminUser | null>(null);
   const [detail, setDetail] = useState<UserDetail | null>(null);
   const [loading, setLoading] = useState(true);

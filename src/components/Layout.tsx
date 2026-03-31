@@ -2,7 +2,7 @@ import { useState, useMemo, useRef, useEffect, type ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useProgress } from '../hooks/useProgress';
-import { sections, getAllSubsections } from '../data/sections';
+import { useSections } from '../contexts/SectionsContext';
 import {
   BookOpen, LayoutDashboard, LogOut, Menu, X, ChevronRight, User,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
@@ -41,6 +41,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const { profile, signOut } = useAuth();
   const { getSectionProgress, getTotalCompleted } = useProgress();
+  const { sections, getAllSubsections } = useSections();
   const location = useLocation();
   const navigate = useNavigate();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -48,7 +49,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   const completed = getTotalCompleted();
   const overallPercent = totalSubs > 0 ? Math.round((completed / totalSubs) * 100) : 0;
 
-  const allSubsections = useMemo(() => getAllSubsections(), []);
+  const allSubsections = useMemo(() => getAllSubsections(), [getAllSubsections]);
 
   const handleSignOut = async () => {
     await signOut();

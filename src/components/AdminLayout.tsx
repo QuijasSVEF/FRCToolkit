@@ -2,12 +2,13 @@ import { useState, type ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import {
-  BookOpen, BarChart3, Users, ArrowLeft, LogOut, Menu, X, ShieldCheck,
+  BookOpen, BarChart3, Users, ArrowLeft, LogOut, Menu, X, ShieldCheck, Layers,
 } from 'lucide-react';
 
 const adminNavItems = [
   { path: '/admin', label: 'Analytics', icon: BarChart3 },
   { path: '/admin/users', label: 'Users', icon: Users },
+  { path: '/admin/modules', label: 'Modules', icon: Layers },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
