@@ -6,7 +6,7 @@ import { sections, getAllSubsections } from '../data/sections';
 import {
   BookOpen, LayoutDashboard, LogOut, Menu, X, ChevronRight, User,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library, Search,
+  Code, Target, Award, Library, Search, ShieldCheck,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -162,6 +162,17 @@ export default function Layout({ children }: { children: ReactNode }) {
               <span className="text-[10px] font-bold text-steel-400">{overallPercent}%</span>
             </div>
           </Link>
+
+          {profile?.role === 'admin' && (
+            <Link
+              to="/admin"
+              className="nav-item mb-1 nav-item-inactive"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <ShieldCheck className="w-4 h-4 flex-shrink-0" />
+              <span className="flex-1">Admin Portal</span>
+            </Link>
+          )}
 
           <div className="mt-4 mb-2 px-3 text-[10px] font-bold text-steel-400 uppercase tracking-[0.1em]">
             Learning Modules
