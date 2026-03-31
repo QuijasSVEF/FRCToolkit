@@ -10,6 +10,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminUserProgress from './pages/admin/AdminUserProgress';
 import AdminModules from './pages/admin/AdminModules';
+import AdminModuleEditor from './pages/admin/AdminModuleEditor';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -99,6 +100,16 @@ export default function App() {
           <AdminRoute>
             <AdminLayout>
               <AdminModules />
+            </AdminLayout>
+          </AdminRoute>
+        }
+      />
+      <Route
+        path="/admin/modules/:moduleId"
+        element={
+          <AdminRoute>
+            <AdminLayout>
+              <AdminModuleEditor />
             </AdminLayout>
           </AdminRoute>
         }
