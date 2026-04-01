@@ -26,6 +26,12 @@ const AVAILABLE_ICONS: { name: string; icon: React.ComponentType<{ className?: s
 const iconLookup: Record<string, React.ComponentType<{ className?: string }>> = {};
 for (const item of AVAILABLE_ICONS) { iconLookup[item.name] = item.icon; }
 
+const BUILTIN_CONTENT_SECTIONS = new Set([
+  'getting-started', 'season-timeline', 'team-organization', 'safety-compliance',
+  'funding-grants', 'mechanical', 'electrical', 'programming',
+  'strategy-scouting', 'awards', 'resources', 'first-competition',
+]);
+
 interface TopicRow {
   id: string;
   title: string;
@@ -73,13 +79,13 @@ function IconPicker({ value, onChange }: { value: string; onChange: (v: string) 
   );
 }
 
-function TopicItem({ topic, index, total, editingId, onStartEdit, onCancelEdit, onSaveEdit, editTitle, setEditTitle, onMove, onDelete, contentTopicId, onToggleContent, sectionId, blockCounts }: {
+function TopicItem({ topic, index, total, editingId, onStartEdit, onCancelEdit, onSaveEdit, editTitle, setEditTitle, onMove, onDelete, contentTopicId, onToggleContent, sectionId, blockCounts, hasBuiltinContent }: {
   topic: TopicRow; index: number; total: number; editingId: string | null;
   onStartEdit: (id: string, title: string) => void; onCancelEdit: () => void; onSaveEdit: (id: string) => void;
   editTitle: string; setEditTitle: (v: string) => void;
   onMove: (index: number, direction: 'up' | 'down') => void; onDelete: (id: string) => void;
   contentTopicId: string | null; onToggleContent: (id: string) => void; sectionId: string | null;
-  blockCounts: Record<string, number>;
+  blockCounts: Record<string, number>; hasBuiltinContent: boolean;
 }) {
   const isEditing = editingId === (topic.tempKey || topic.id);
   const isContentOpen = contentTopicId === topic.id;
@@ -118,7 +124,11 @@ function TopicItem({ topic, index, total, editingId, onStartEdit, onCancelEdit, 
                 {canEditContent && (
                   blockCount > 0 ? (
                     <span className="text-[10px] font-medium text-success-600 flex items-center gap-0.5">
-                      <FileText className="w-3 h-3" /> {blockCount} blocks
+                      <FileText className="w-3 h-3" /> {blockCount} custom blocks
+                    </span>
+                  ) : hasBuiltinContent ? (
+                    <span className="text-[10px] font-medium text-blue-500 flex items-center gap-0.5">
+                      <FileText className="w-3 h-3" /> Built-in content
                     </span>
                   ) : (
                     <span className="text-[10px] font-medium text-steel-400 flex items-center gap-0.5">
@@ -322,6 +332,7 @@ export default function AdminModuleEditor() {
   const PreviewIcon = iconLookup[icon] || BookOpen;
   const totalBlocks = Object.values(blockCounts).reduce((a, b) => a + b, 0);
   const topicsWithContent = Object.keys(blockCounts).filter(k => blockCounts[k] > 0).length;
+  const hasBuiltin = !isNew && BUILTIN_CONTENT_SECTIONS.has(moduleId!);
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 animate-fade-in">
@@ -400,9 +411,19 @@ export default function AdminModuleEditor() {
               )}
             </p>
           </div>
-          {!isNew && topics.length > 0 && topicsWithContent < topics.filter(t => !t.isNew).length && (
+          {!isNew && topics.length > 0 && !hasBuiltin && topicsWithContent < topics.filter(t => !t.isNew).length && (
             <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-amber-50 text-amber-600 border border-amber-100">
               {topics.filter(t => !t.isNew).length - topicsWithContent} need content
+            </span>
+          )}
+          {hasBuiltin && totalBlocks === 0 && (
+            <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+              Built-in content active
+            </span>
+          )}
+          {hasBuiltin && totalBlocks > 0 && (
+            <span className="text-[10px] font-semibold px-2 py-1 rounded-full bg-success-50 text-success-600 border border-success-100">
+              Custom content overrides built-in
             </span>
           )}
         </div>
@@ -411,6 +432,11 @@ export default function AdminModuleEditor() {
           <div className="mb-4 p-3 bg-steel-50/50 rounded-xl">
             <p className="text-xs text-steel-500">
               Click any topic to expand its content editor. Add text, videos, quizzes, info boxes, and more. Content is saved separately from module settings.
+              {hasBuiltin && (
+                <span className="block mt-1 text-blue-500">
+                  This module has built-in content that learners see by default. Adding custom content blocks will override the built-in content.
+                </span>
+              )}
             </p>
           </div>
         )}
@@ -430,7 +456,7 @@ export default function AdminModuleEditor() {
                 editingId={editingId} onStartEdit={startEdit} onCancelEdit={() => setEditingId(null)} onSaveEdit={saveEdit}
                 editTitle={editTitle} setEditTitle={setEditTitle} onMove={moveTopic} onDelete={deleteTopic}
                 contentTopicId={contentTopicId} onToggleContent={(id) => setContentTopicId(contentTopicId === id ? null : id)}
-                sectionId={isNew ? null : moduleId!} blockCounts={blockCounts}
+                sectionId={isNew ? null : moduleId!} blockCounts={blockCounts} hasBuiltinContent={!isNew && BUILTIN_CONTENT_SECTIONS.has(moduleId!)}
               />
             ))}
           </div>
