@@ -8,6 +8,8 @@ import { Printer, ArrowLeft, ArrowRight, CheckCircle2, Clock, ChevronDown, Save,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ProgressCheckbox from '../components/ProgressCheckbox';
+import ContentRenderer from '../components/ContentRenderer';
+import { supabase } from '../lib/supabase';
 
 import GettingStartedContent from '../content/GettingStartedContent';
 import SeasonTimelineContent from '../content/SeasonTimelineContent';
@@ -150,6 +152,45 @@ function NotesSection({ sectionId }: { sectionId: string }) {
   );
 }
 
+function DynamicSectionContent({ sectionId, subsections, fallback: Fallback }: {
+  sectionId: string;
+  subsections: { id: string; title: string }[];
+  fallback?: React.ComponentType;
+}) {
+  const [hasDbContent, setHasDbContent] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const check = async () => {
+      const { count } = await supabase
+        .from('content_blocks')
+        .select('*', { count: 'exact', head: true })
+        .eq('section_id', sectionId);
+      if (!cancelled) setHasDbContent((count ?? 0) > 0);
+    };
+    check();
+    return () => { cancelled = true; };
+  }, [sectionId]);
+
+  if (hasDbContent === null) {
+    if (Fallback) return <Fallback />;
+    return null;
+  }
+
+  if (hasDbContent) {
+    return (
+      <div className="space-y-6">
+        {subsections.map(sub => (
+          <ContentRenderer key={sub.id} sectionId={sectionId} subsectionId={sub.id} />
+        ))}
+      </div>
+    );
+  }
+
+  if (Fallback) return <Fallback />;
+  return null;
+}
+
 export default function SectionPage() {
   const { sectionId } = useParams<{ sectionId: string }>();
   const { toggleSubsection, isCompleted, getSectionProgress, progress } = useProgress();
@@ -289,7 +330,11 @@ export default function SectionPage() {
 
       <div className="grid lg:grid-cols-[1fr,260px] gap-6">
         <div className="space-y-8">
-          {ContentComponent && <ContentComponent />}
+          <DynamicSectionContent
+            sectionId={section.id}
+            subsections={section.subsections}
+            fallback={ContentComponent}
+          />
         </div>
 
         <div className="hidden lg:block print-hidden">
