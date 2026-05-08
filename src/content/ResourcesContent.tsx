@@ -54,7 +54,9 @@ const vendorResources = [
 
 const communityResources = [
   { title: 'Chief Delphi', url: 'https://www.chiefdelphi.com/', type: 'link' as const, description: 'Largest FRC community forum' },
+  { title: 'FRC Discord', url: 'https://discord.gg/frc', type: 'link' as const, description: 'Real-time community chat for FRC teams' },
   { title: 'The Compass Alliance', url: 'https://www.thecompassalliance.org/', type: 'link' as const, description: 'Scouting guides and team resources' },
+  { title: 'Team 254 Resources', url: 'https://www.team254.com/resources/', type: 'link' as const, description: 'Technical resources from The Cheesy Poofs' },
   { title: 'Team 118 Everybot', url: 'https://www.118everybot.org/2026-frc-resources', type: 'link' as const, description: 'Accessible build documentation' },
   { title: 'The Blue Alliance', url: 'https://www.thebluealliance.com/', type: 'tool' as const, description: 'Match data, rankings, and history' },
   { title: 'TBA API Docs', url: 'https://www.thebluealliance.com/apidocs', type: 'tool' as const, description: 'Community data API' },
@@ -64,6 +66,17 @@ const communityResources = [
   { title: 'Limelight Docs', url: 'https://docs.limelightvision.io/', type: 'tool' as const, description: 'Plug-and-play vision system' },
   { title: 'PathPlanner', url: 'https://pathplanner.dev/', type: 'tool' as const, description: 'Autonomous path planning tool' },
   { title: 'Everybot Docs', url: 'https://robonauts-everybot.github.io/Everybot-Docs/fundamentals/electrical-overview/', type: 'link' as const, description: 'Robonauts Everybot wiring and build docs' },
+];
+
+const trainingCurriculums = [
+  { title: 'Spectrum 3847 Training Curriculum', url: 'https://docs.google.com/document/u/1/d/e/2PACX-1vQk_ghFBN7682QI_17lbBCx8V_RXNomQRR7er-UIzlllsbdpO4RWOQAVnGFZAEypeNm2grS2G9oxFMp/pub', type: 'link' as const, description: 'Comprehensive training covering programming, design, build, strategy, media, and awards' },
+  { title: 'FRC Design Learning Course', url: 'https://www.frcdesign.org/learning-course/', type: 'link' as const, description: 'Complete Onshape CAD course specifically for FRC robot design' },
+  { title: 'FRC Programming Curriculum', url: 'https://github.com/randomstring/FRC-Programming-Curriculum/blob/main/ProgrammingCurriculum.md', type: 'link' as const, description: 'Structured Java/WPILib/PID/Git curriculum for FRC programming subteams' },
+  { title: 'FMA+ Virtual Operator Framework', url: 'https://midatlanticrobotics.com/fma-plus-training-ftc-frc-programming/', type: 'link' as const, description: 'Programming framework and training from Mid-Atlantic Robotics' },
+  { title: 'Citrus Circuits Curriculum', url: 'https://www.citruscircuits.org/curriculum.html', type: 'link' as const, description: 'Team 1678 open-source training for programming and mechanical' },
+  { title: 'Controls Engineering in FRC (PDF)', url: 'https://file.tavsys.net/control/controls-engineering-in-frc.pdf', type: 'pdf' as const, description: 'Tyler Veness textbook on control theory for FRC applications' },
+  { title: 'Learn Git Branching', url: 'https://learngitbranching.js.org/', type: 'tool' as const, description: 'Interactive tutorial to learn Git version control' },
+  { title: 'Codecademy Learn Java', url: 'https://www.codecademy.com/learn/learn-java', type: 'link' as const, description: 'Interactive Java course for programming students' },
 ];
 
 const videos = [
@@ -183,6 +196,19 @@ export default function ResourcesContent() {
         <h2 className="text-xl font-bold text-steel-900 mb-4">Vendor Documentation</h2>
         <div className="grid gap-2">
           {vendorResources.map((r) => (
+            <ResourceCard key={r.url} resource={r} />
+          ))}
+        </div>
+      </section>
+
+      <section id="training-curriculums">
+        <h2 className="text-xl font-bold text-steel-900 mb-4">Training Curriculums & Courses</h2>
+        <p className="text-steel-600 leading-relaxed mb-4">
+          Structured training programs created by veteran FRC teams. These cover everything from
+          programming fundamentals to advanced design and are excellent for onboarding new students.
+        </p>
+        <div className="grid gap-2">
+          {trainingCurriculums.map((r) => (
             <ResourceCard key={r.url} resource={r} />
           ))}
         </div>

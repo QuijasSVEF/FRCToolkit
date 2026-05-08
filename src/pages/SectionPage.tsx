@@ -4,7 +4,7 @@ import { useNotes } from '../hooks/useNotes';
 import { useSections } from '../contexts/SectionsContext';
 import { Printer, ArrowLeft, ArrowRight, CheckCircle2, Clock, ChevronDown, Save, FileText, BookOpen,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library, Trophy, Lock,
+  Code, Target, Award, Library, Trophy, Lock, Compass,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import ProgressCheckbox from '../components/ProgressCheckbox';
@@ -23,6 +23,7 @@ import StrategyScoutingContent from '../content/StrategyScoutingContent';
 import AwardsContent from '../content/AwardsContent';
 import ResourcesContent from '../content/ResourcesContent';
 import FirstCompetitionContent from '../content/FirstCompetitionContent';
+import DesignCADContent from '../content/DesignCADContent';
 
 const contentMap: Record<string, React.ComponentType> = {
   'getting-started': GettingStartedContent,
@@ -37,11 +38,12 @@ const contentMap: Record<string, React.ComponentType> = {
   'awards': AwardsContent,
   'resources': ResourcesContent,
   'first-competition': FirstCompetitionContent,
+  'design-cad': DesignCADContent,
 };
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library, Trophy,
+  Code, Target, Award, Library, Trophy, Compass,
 };
 
 const gradientMap: Record<string, string> = {
@@ -56,7 +58,8 @@ const gradientMap: Record<string, string> = {
   Target: 'from-rose-500 to-red-500',
   Award: 'from-yellow-400 to-amber-500',
   Library: 'from-brand-500 to-blue-600',
-  Trophy: 'from-purple-500 to-indigo-500',
+  Trophy: 'from-orange-500 to-amber-500',
+  Compass: 'from-cyan-500 to-teal-500',
 };
 
 function MiniProgressRing({ percent }: { percent: number }) {

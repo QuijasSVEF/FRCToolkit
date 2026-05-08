@@ -5,11 +5,11 @@ import { useProgress } from '../hooks/useProgress';
 import { useBookmarks } from '../hooks/useBookmarks';
 import { useNotes } from '../hooks/useNotes';
 import { useSections } from '../contexts/SectionsContext';
-import { Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library, ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame, Clock, Bookmark as BookmarkIcon, FileText } from 'lucide-react';
+import { Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library, Compass, Trophy, ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame, Clock, Bookmark as BookmarkIcon, FileText } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library,
+  Code, Target, Award, Library, Compass, Trophy,
 };
 
 const colorMap: Record<string, string> = {
@@ -18,12 +18,14 @@ const colorMap: Record<string, string> = {
   Users: 'from-sky-500 to-blue-500',
   Shield: 'from-amber-500 to-orange-500',
   DollarSign: 'from-emerald-500 to-green-500',
+  Compass: 'from-cyan-500 to-teal-500',
   Wrench: 'from-slate-500 to-gray-600',
   Zap: 'from-yellow-500 to-amber-500',
   Code: 'from-blue-600 to-brand-500',
   Target: 'from-rose-500 to-red-500',
   Award: 'from-yellow-400 to-amber-500',
   Library: 'from-brand-500 to-blue-600',
+  Trophy: 'from-orange-500 to-amber-500',
 };
 
 function BigProgressRing({ percent }: { percent: number }) {

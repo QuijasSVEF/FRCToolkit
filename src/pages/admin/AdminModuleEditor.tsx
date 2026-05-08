@@ -29,7 +29,7 @@ for (const item of AVAILABLE_ICONS) { iconLookup[item.name] = item.icon; }
 const BUILTIN_CONTENT_SECTIONS = new Set([
   'getting-started', 'season-timeline', 'team-organization', 'safety-compliance',
   'funding-grants', 'mechanical', 'electrical', 'programming',
-  'strategy-scouting', 'awards', 'resources', 'first-competition',
+  'strategy-scouting', 'awards', 'resources', 'first-competition', 'design-cad',
 ]);
 
 interface TopicRow {
