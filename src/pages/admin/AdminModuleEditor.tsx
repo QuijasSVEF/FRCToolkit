@@ -5,7 +5,7 @@ import {
   Pencil, X, Check, BookOpen, AlertTriangle, FileText, ChevronRight,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
   Code, Target, Award, Library, Trophy, Heart, Star, Globe, Layers,
-  Cpu, Database, Radio, Compass, Map, Flag, Lightbulb, Megaphone,
+  Cpu, Database, Radio, Compass, Map, Flag, Lightbulb, Megaphone, GraduationCap,
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useSections } from '../../contexts/SectionsContext';
@@ -20,7 +20,7 @@ const AVAILABLE_ICONS: { name: string; icon: React.ComponentType<{ className?: s
   { name: 'Globe', icon: Globe }, { name: 'Layers', icon: Layers }, { name: 'Cpu', icon: Cpu },
   { name: 'Database', icon: Database }, { name: 'Radio', icon: Radio }, { name: 'Compass', icon: Compass },
   { name: 'Map', icon: Map }, { name: 'Flag', icon: Flag }, { name: 'Lightbulb', icon: Lightbulb },
-  { name: 'Megaphone', icon: Megaphone },
+  { name: 'Megaphone', icon: Megaphone }, { name: 'GraduationCap', icon: GraduationCap },
 ];
 
 const iconLookup: Record<string, React.ComponentType<{ className?: string }>> = {};
@@ -30,6 +30,7 @@ const BUILTIN_CONTENT_SECTIONS = new Set([
   'getting-started', 'season-timeline', 'team-organization', 'safety-compliance',
   'funding-grants', 'mechanical', 'electrical', 'programming',
   'strategy-scouting', 'awards', 'resources', 'first-competition', 'design-cad',
+  'coach-curriculum',
 ]);
 
 interface TopicRow {

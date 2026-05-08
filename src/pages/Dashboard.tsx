@@ -5,11 +5,11 @@ import { useProgress } from '../hooks/useProgress';
 import { useBookmarks } from '../hooks/useBookmarks';
 import { useNotes } from '../hooks/useNotes';
 import { useSections } from '../contexts/SectionsContext';
-import { Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library, Compass, Trophy, ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame, Clock, Bookmark as BookmarkIcon, FileText } from 'lucide-react';
+import { Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap, Code, Target, Award, Library, Compass, Trophy, GraduationCap, ArrowRight, CheckCircle2, CreditCard as Edit3, Save, Flame, Clock, Bookmark as BookmarkIcon, FileText } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library, Compass, Trophy,
+  Code, Target, Award, Library, Compass, Trophy, GraduationCap,
 };
 
 const colorMap: Record<string, string> = {
@@ -26,6 +26,7 @@ const colorMap: Record<string, string> = {
   Award: 'from-yellow-400 to-amber-500',
   Library: 'from-brand-500 to-blue-600',
   Trophy: 'from-orange-500 to-amber-500',
+  GraduationCap: 'from-brand-600 to-teal-500',
 };
 
 function BigProgressRing({ percent }: { percent: number }) {

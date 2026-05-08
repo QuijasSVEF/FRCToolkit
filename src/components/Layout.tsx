@@ -6,12 +6,12 @@ import { useSections } from '../contexts/SectionsContext';
 import {
   BookOpen, LayoutDashboard, LogOut, Menu, X, ChevronRight, User,
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library, Search, ShieldCheck, Compass, Trophy,
+  Code, Target, Award, Library, Search, ShieldCheck, Compass, Trophy, GraduationCap,
 } from 'lucide-react';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Rocket, Calendar, Users, Shield, DollarSign, Wrench, Zap,
-  Code, Target, Award, Library, Compass, Trophy,
+  Code, Target, Award, Library, Compass, Trophy, GraduationCap,
 };
 
 function ProgressRing({ percent, size = 32 }: { percent: number; size?: number }) {

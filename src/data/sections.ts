@@ -2,6 +2,22 @@ import type { Section } from '../types';
 
 export const sections: Section[] = [
   {
+    id: 'coach-curriculum',
+    title: 'Coach Curriculum Path',
+    description: 'Structured 6-unit curriculum with paired Teacher and Student guides for new FRC coaches',
+    icon: 'GraduationCap',
+    estimatedMinutes: 60,
+    subsections: [
+      { id: 'preparation', title: 'Preparation & Overview' },
+      { id: 'unit-1', title: 'Unit 1: Preseason Foundations' },
+      { id: 'unit-2', title: 'Unit 2: Kickoff & Strategy' },
+      { id: 'unit-3', title: 'Unit 3: Design & Prototyping' },
+      { id: 'unit-4', title: 'Unit 4: Build & Fabrication' },
+      { id: 'unit-5', title: 'Unit 5: Programming & Integration' },
+      { id: 'unit-6', title: 'Unit 6: Competition & Reflection' },
+    ],
+  },
+  {
     id: 'getting-started',
     title: 'Getting Started',
     description: 'FRC overview, how to start a team, and first steps for new mentors',
